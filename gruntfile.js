@@ -8,6 +8,9 @@ module.exports = function(grunt) {
             'bower_components/angular-route/angular-route.min.js',
             'bower_components/showdown/dist/showdown.min.js',
             'generated/templates.js',
+            'app/src/routes.js',
+            'app/src/services.js',
+            'app/src/controllers.js',
             'app/src/app.js'
         ]
     };
