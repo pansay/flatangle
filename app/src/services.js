@@ -5,7 +5,7 @@ var ngComponents = ngComponents || {};
 ngComponents.converterService = function () {
 
     var markdownConverter = new showdown.Converter();
-    
+
     this.makeHtml = function (text) {
         return markdownConverter.makeHtml(text);
     };
@@ -14,7 +14,7 @@ ngComponents.converterService = function () {
 
 ngComponents.postsService = function ($http, $sce, converterService) {
 
-    var postsUrl = '/content/posts/';
+    var postsUrl = 'content/posts/';
 
     var cache = {}; // object of cached full posts
 
