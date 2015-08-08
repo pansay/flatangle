@@ -8,7 +8,8 @@ module.exports = function(grunt) {
             'bower_components/angular-route/angular-route.min.js',
             'bower_components/showdown/dist/showdown.min.js',
             'generated/templates.js',
-            'generated/posts.js',
+            //'generated/posts.js',
+            'generated/config.js',
             'app/src/routes.js',
             'app/src/services.js',
             'app/src/controllers.js',
@@ -126,6 +127,17 @@ module.exports = function(grunt) {
                 },
                 src: ['generated/posts.json'],
                 dest: 'generated/posts.js'
+            },
+            config: {
+                options: {
+                    namespace: 'json',
+                    includePath: false,
+                    processName: function(filename) {
+                        return filename.toLowerCase();
+                    }
+                },
+                src: ['config.json'],
+                dest: 'generated/config.js'
             }
         }
     });
@@ -154,13 +166,14 @@ module.exports = function(grunt) {
 
     // merely update posts list and refresh app js with it
     grunt.registerTask('update', [
-        'posts',
+        //'posts',
         'uglify:dist'
     ]);
 
     // just js/html dev
     grunt.registerTask('jsdev', [
-        'posts',
+        //'posts',
+        'json:config',
         'html2js:main',
         'jshint',
         'uglify:dev',
@@ -170,7 +183,8 @@ module.exports = function(grunt) {
 
     // just js/html dist
     grunt.registerTask('jsdist', [
-        'posts',
+        //'posts',
+        'json:config',
         'html2js:main',
         'jshint',
         'uglify:dist',
@@ -187,14 +201,14 @@ module.exports = function(grunt) {
     // dev / unminified
     grunt.registerTask('dev', [
         'lesscss',
-        'jsdev'        
+        'jsdev'
     ]);
 
     // default / dist / prod / minified
     grunt.registerTask('default', [
         'lesscss',
         'cssmin:dist',
-        'jsdist',        
+        'jsdist',
     ]);
 
     // tests
