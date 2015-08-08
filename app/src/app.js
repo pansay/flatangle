@@ -1,7 +1,8 @@
 (function appClosure (ng, showdown) {
 
     var modulesDependencies = [
-        'ngRoute'
+        'ngRoute',
+        'templates-main' // cached templates
     ];
 
     var router = function ($routeProvider) {

@@ -5,7 +5,8 @@ module.exports = function(grunt) {
             'bower_components/angular/angular.min.js',
             'bower_components/angular-route/angular-route.min.js',
             'bower_components/showdown/dist/showdown.min.js',
-            'app/app.js'
+            'generated/templates.js',
+            'app/src/app.js'
         ]
     };
 
@@ -79,7 +80,21 @@ module.exports = function(grunt) {
                 },
                 files: jsFiles
             }
-        }
+        },
+        html2js: {
+            options: {
+                htmlmin: {
+                    collapseWhitespace: true,
+                    removeComments: true
+                },
+                base: '',
+                useStrict: true
+            },
+            main: {
+                src: ['app/templates/views/*.html'],
+                dest: 'generated/templates.js'
+            },
+        },
     });
 
     grunt.loadNpmTasks('grunt-html');
@@ -92,7 +107,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
+    grunt.loadNpmTasks('grunt-html2js');
+
     grunt.registerTask('default', [
+        'html2js:main',
         'lesslint',
         'less',
         'cssmin:dist',
@@ -103,6 +121,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('dev', [
+        'html2js:main',
         'lesslint',
         'less',
         'jshint',
