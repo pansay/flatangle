@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
 
-    var jsFiles = {
+    var options = {};
+
+    options.jsFiles = {
         'generated/all.js': [
             'bower_components/angular/angular.min.js',
             'bower_components/angular-route/angular-route.min.js',
@@ -10,13 +12,22 @@ module.exports = function(grunt) {
         ]
     };
 
+    options.htmllintIgnores = [
+        /Start tag seen without seeing a doctype first/, // to pass angular partials
+        /Non-space characters found without seeing a doctype first/, // to pass angular partials
+        /Element “head” is missing a required instance of child element “title”/ // to pass angular partials
+    ];
+
+    options.htmlmin = {
+        collapseWhitespace: true,
+        removeComments: true
+    };
+
+
     grunt.initConfig({
         htmlmin: {
             dist: {
-                options: {
-                    removeComments: true,
-                    collapseWhitespace: true
-                },
+                options: options.htmlmin,
                 files: {
                     'index.html': 'app/templates/index.html',
                 }
@@ -34,10 +45,7 @@ module.exports = function(grunt) {
                     'index.html'
                 ],
                 options: {
-                    ignore: [
-                        /Non-space characters found without seeing a doctype first/,
-                        /Element “head” is missing a required instance of child element “title”/
-                    ]
+                    ignore: options.htmllintIgnores
                 }
             }
         },
@@ -72,21 +80,18 @@ module.exports = function(grunt) {
         },
         uglify: {
             dist: {
-                files: jsFiles
+                files: options.jsFiles
             },
             dev: {
                 options: {
                     beautify: true
                 },
-                files: jsFiles
+                files: options.jsFiles
             }
         },
         html2js: {
             options: {
-                htmlmin: {
-                    collapseWhitespace: true,
-                    removeComments: true
-                },
+                htmlmin: options.htmlmin,
                 base: '',
                 useStrict: true
             },
@@ -108,6 +113,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.loadNpmTasks('grunt-html2js');
+
 
     grunt.registerTask('default', [
         'html2js:main',

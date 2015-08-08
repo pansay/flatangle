@@ -1,8 +1,10 @@
+/* global angular, showdown */
+
 (function appClosure (ng, showdown) {
 
     var modulesDependencies = [
         'ngRoute',
-        'templates-main' // cached templates
+        'templates-main' // pre-cached templates
     ];
 
     var router = function ($routeProvider) {
@@ -19,7 +21,8 @@
                 controller: 'detailsController as post',
                 resolve: {
                     postDetails: ['postsService', function (postsService) {
-                        return postsService.getPost();
+                        var postId = '2014-08-16_flat-file-cms-ftw'; // TODO from param
+                        return postsService.getPost(postId);
                     }]
                 }
             })
@@ -31,10 +34,10 @@
 
     var converterService = function () {
 
-        var converter = new showdown.Converter();
+        var markdownConverter = new showdown.Converter();
         
         this.makeHtml = function (text) {
-            return converter.makeHtml(text);
+            return markdownConverter.makeHtml(text);
         };
 
     };
@@ -43,13 +46,14 @@
 
         var postsUrl = '/content/posts/';
 
-        var cache = false;
+        var cache = {};
 
-        this.getPost = function () { // TODO: postId etc
-            return cache || $http.get(postsUrl + '2014-08-16_flat-file-cms-ftw.md').then(function (response) {
-                cache = converterService.makeHtml(response.data);
-                cache = $sce.trustAsHtml(cache);
-                return cache;
+        this.getPost = function (postId) {
+            var url = postsUrl + postId + '.md';
+            return cache.postId || $http.get(url).then(function (response) {
+                cache.postId = converterService.makeHtml(response.data);
+                cache.postId = $sce.trustAsHtml(cache.postId);
+                return cache.postId;
             });
         };
 
