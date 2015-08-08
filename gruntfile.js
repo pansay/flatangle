@@ -1,5 +1,14 @@
 module.exports = function(grunt) {
 
+    var jsFiles = {
+        'generated/all.js': [
+            'bower_components/angular/angular.min.js',
+            'bower_components/angular-route/angular-route.min.js',
+            'bower_components/showdown/dist/showdown.min.js',
+            'app/app.js'
+        ]
+    };
+
     grunt.initConfig({
         htmlmin: {
             dist: {
@@ -62,14 +71,13 @@ module.exports = function(grunt) {
         },
         uglify: {
             dist: {
-                files: {
-                    'generated/all.js': [
-                        'bower_components/angular/angular.min.js',
-                        'bower_components/angular-route/angular-route.min.js',
-                        'bower_components/showdown/dist/showdown.min.js',
-                        'app/app.js'
-                    ]
-                }
+                files: jsFiles
+            },
+            dev: {
+                options: {
+                    beautify: true
+                },
+                files: jsFiles
             }
         }
     });
@@ -91,6 +99,15 @@ module.exports = function(grunt) {
         'jshint',
         'uglify:dist',
         'htmlmin:dist',
+        'htmllint'
+    ]);
+
+    grunt.registerTask('dev', [
+        'lesslint',
+        'less',
+        'jshint',
+        'uglify:dev',
+        'htmlmin:dev',
         'htmllint'
     ]);
 

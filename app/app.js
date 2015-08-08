@@ -1,56 +1,78 @@
 (function appClosure (ng, showdown) {
 
-	var modulesDependencies = [
-		'ngRoute'
-	];
+    var modulesDependencies = [
+        'ngRoute'
+    ];
 
-	var router = function ($routeProvider) {
+    var router = function ($routeProvider) {
 
-		var viewsFolder = 'app/templates/views/';
+        var viewsFolder = 'app/templates/views/';
 
-		$routeProvider
-			.when('/posts', {
-				templateUrl: viewsFolder + 'list.html',
-				controller: 'listController'
-			})
-			.when('/posts/:postId', {
-				templateUrl: viewsFolder + 'details.html',
-				controller: 'detailsController'
-			})
-			.otherwise({
-				redirectTo: '/posts'
-			});
+        $routeProvider
+            .when('/posts', {
+                templateUrl: viewsFolder + 'list.html',
+                controller: 'listController'
+            })
+            .when('/posts/:postId', {
+                templateUrl: viewsFolder + 'details.html',
+                controller: 'detailsController as post',
+                resolve: {
+                    postDetails: ['postsService', function (postsService) {
+                        return postsService.getPost();
+                    }]
+                }
+            })
+            .otherwise({
+                redirectTo: '/posts'
+            });
 
-	};
+    };
 
-	var listController = function () {
+    var converterService = function () {
 
-		// text      = '#hello, markdown!',
-	 //    html      = 
+        var converter = new showdown.Converter();
+        
+        this.makeHtml = function (text) {
+            return converter.makeHtml(text);
+        };
 
-	 //    console.log(html);
+    };
 
-	};
+    var postsService = function ($http, $sce, converterService) {
 
-	var detailsController = function () {
+        var postsUrl = '/content/posts/';
 
-	};
+        var cache = false;
 
-	var converterService = function () {
+        this.getPost = function () { // TODO: postId etc
+            return cache || $http.get(postsUrl + '2014-08-16_flat-file-cms-ftw.md').then(function (response) {
+                cache = converterService.makeHtml(response.data);
+                cache = $sce.trustAsHtml(cache);
+                return cache;
+            });
+        };
 
-		var converter = new showdown.Converter();
-	    
-	    this.makeHtml = function (text) {
-	    	return converter.makeHtml(text);
-	    };
+    };
 
-	};
+    var listController = function () {
 
-	ng
-		.module('flatAngle', modulesDependencies)
-			.config(['$routeProvider', router])
-			.controller('listController', listController)
-			.controller('detailsController', detailsController)
-			.service('converterService', converterService);
+        // TODO: how to get full list? use json config file?
+
+    };
+
+    var detailsController = function (postDetails) {
+
+        var vm = this;
+        vm.details = postDetails;
+
+    };
+
+    ng
+        .module('flatAngle', modulesDependencies)
+            .config(['$routeProvider', router])
+            .service('converterService', converterService)
+            .service('postsService', ['$http', '$sce', 'converterService', postsService])
+            .controller('listController', listController)
+            .controller('detailsController', ['postDetails', detailsController]);
 
 })(angular, showdown);
