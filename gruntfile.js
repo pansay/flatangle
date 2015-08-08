@@ -18,10 +18,18 @@ module.exports = function(grunt) {
             }
         },
         htmllint: {
-            all: [
-                'app/templates/index.html',
-                'index.html'
-            ]
+            all: {
+                src: [
+                    'app/templates/**/*.html',
+                    'index.html'
+                ],
+                options: {
+                    ignore: [
+                        /Non-space characters found without seeing a doctype first/,
+                        /Element “head” is missing a required instance of child element “title”/
+                    ]
+                }
+            }
         },
         lesslint: {
             src: ['app/styles/main.less'],
@@ -57,6 +65,8 @@ module.exports = function(grunt) {
                 files: {
                     'generated/all.js': [
                         'bower_components/angular/angular.min.js',
+                        'bower_components/angular-route/angular-route.min.js',
+                        'bower_components/showdown/dist/showdown.min.js',
                         'app/app.js'
                     ]
                 }

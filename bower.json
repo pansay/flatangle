@@ -19,6 +19,7 @@
     "globals"
   ],
   "dependencies": {
-    "angular": "~1.4.3"
+    "angular": "~1.4.3",
+    "showdown": "~1.2.2"
   }
 }

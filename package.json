@@ -4,11 +4,9 @@
   "description": "FlatAngle: flatfile angular blog tool",
   "private": true,
   "scripts": {
-    "start": "grunt",
-    "test": "grunt test",
     "postinstall": "bower install",
-    "prestart": "npm install",
-    "pretest": "npm install"
+    "prestart": "grunt",
+    "start": "http-server -a 0.0.0.0 -p 8000"
   },
   "repository": {
     "type": "git",
@@ -28,6 +26,7 @@
     "url": "https://github.com/pansay/flatangle/issues"
   },
   "dependencies": {
+    "http-server": "^0.6.1",
     "grunt": "^0.4.5",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-htmlmin": "^0.4.0",
