@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.3",
-    "showdown": "~1.2.2"
+    "showdown": "~1.2.2",
+    "angular-route": "~1.4.3"
   }
 }
