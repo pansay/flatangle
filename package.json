@@ -1,0 +1,42 @@
+{
+  "name": "FlatAngle",
+  "version": "0.0.1",
+  "description": "FlatAngle: flatfile angular blog tool",
+  "private": true,
+  "scripts": {
+    "test": "grunt test",
+    "postinstall": "bower install",
+    "prestart": "npm install",
+    "pretest": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pansay/flatangle.git"
+  },
+  "keywords": [
+    "markdown",
+    "angular",
+    "flatfile",
+    "blog",
+    "client-side",
+    "cms"
+  ],
+  "author": "pansay",
+  "license": "UNLICENSE",
+  "bugs": {
+    "url": "https://github.com/pansay/flatangle/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-cssmin": "^0.12.3",
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-less": "^1.0.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-html": "^4.0.3",
+    "grunt-lesslint": "^1.1.14"
+  },
+  "dependencies": {
+    "bower": "~1.4.1"
+  }
+}

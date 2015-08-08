@@ -1,0 +1,24 @@
+{
+  "name": "FlatAngle",
+  "version": "0.0.1",
+  "description": "FlatAngle: flatfile angular blog tool",
+  "homepage": "https://github.com/pansay/flatangle",
+  "private": true,
+  "keywords": [
+    "markdown",
+    "angular",
+    "flatfile",
+    "blog",
+    "client-side",
+    "cms"
+  ],
+  "author": "pansay",
+  "license": "UNLICENSE",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3"
+  }
+}
