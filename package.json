@@ -27,6 +27,14 @@
   },
   "dependencies": {
     "bower": "~1.4.1",
-    "grunt-html2js": "~0.3.4"
+    "grunt": "^0.4.5",
+    "grunt-html2js": "~0.3.4",   
+    "grunt-contrib-cssmin": "^0.12.3",
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-less": "^1.0.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-html": "^4.0.3",
+    "grunt-lesslint": "^1.1.14"
   }
 }
