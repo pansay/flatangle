@@ -2,8 +2,12 @@
 
 <p>Posts list:</p>
 
-<ul>
-    <li>
-        <a href="#/posts/2014-08-16_flat-file-cms-ftw">go to post '2014-08-16_flat-file-cms-ftw'</a>
+<ul data-ng-show="posts.list">
+    <li data-ng-repeat="post in posts.list">
+        <a href="#" data-ng-href="#/posts/{{post.alias}}">{{post.date}} - {{post.alias}}</a>
     </li>
 </ul>
+
+<p data-ng-hide="posts.list">
+	no posts yet
+</p>

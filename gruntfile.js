@@ -8,6 +8,7 @@ module.exports = function(grunt) {
             'bower_components/angular-route/angular-route.min.js',
             'bower_components/showdown/dist/showdown.min.js',
             'generated/templates.js',
+            'generated/posts.js',
             'app/src/routes.js',
             'app/src/services.js',
             'app/src/controllers.js',
@@ -103,42 +104,100 @@ module.exports = function(grunt) {
                 dest: 'generated/templates.js'
             },
         },
+        folder_list: {
+            options: {
+                files: true,
+                folders: false
+            },
+            posts: {
+                files: {
+                    'generated/posts.json': ['content/posts/*.md']
+                }
+            }
+        },
+        json: {
+            posts: {
+                options: {
+                    namespace: 'json',
+                    includePath: false,
+                    processName: function(filename) {
+                        return filename.toLowerCase();
+                    }
+                },
+                src: ['generated/posts.json'],
+                dest: 'generated/posts.js'
+            }
+        }
     });
 
-    grunt.loadNpmTasks('grunt-html');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin'); // minify html
+    grunt.loadNpmTasks('grunt-html'); // validate html
 
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-lesslint');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-less'); // parse less
+    grunt.loadNpmTasks('grunt-lesslint'); // validate less
+    grunt.loadNpmTasks('grunt-contrib-cssmin'); // minify css
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint'); // validate js
+    grunt.loadNpmTasks('grunt-contrib-uglify'); // minify js
 
-    grunt.loadNpmTasks('grunt-html2js');
+    grunt.loadNpmTasks('grunt-html2js'); // precache angular templates
+
+    grunt.loadNpmTasks('grunt-folder-list'); // generate json from a folder's files
+    grunt.loadNpmTasks('grunt-json'); // convert it to js object
 
 
-    grunt.registerTask('default', [
-        'html2js:main',
-        'lesslint',
-        'less',
-        'cssmin:dist',
-        'jshint',
-        'uglify:dist',
-        'htmlmin:dist',
-        'htmllint'
+    // merely update posts list
+    grunt.registerTask('posts', [
+        'folder_list:posts',
+        'json:posts'
     ]);
 
-    grunt.registerTask('dev', [
+    // merely update posts list and refresh app js with it
+    grunt.registerTask('update', [
+        'posts',
+        'uglify:dist'
+    ]);
+
+    // just js/html dev
+    grunt.registerTask('jsdev', [
+        'posts',
         'html2js:main',
-        'lesslint',
-        'less',
         'jshint',
         'uglify:dev',
         'htmlmin:dev',
         'htmllint'
     ]);
 
+    // just js/html dist
+    grunt.registerTask('jsdist', [
+        'posts',
+        'html2js:main',
+        'jshint',
+        'uglify:dist',
+        'htmlmin:dist',
+        'htmllint'
+    ]);
+
+    // less only
+    grunt.registerTask('lesscss', [
+        'lesslint',
+        'less'
+    ]);
+
+    // dev / unminified
+    grunt.registerTask('dev', [
+        'lesscss',
+        'jsdev'        
+    ]);
+
+    // default / dist / prod / minified
+    grunt.registerTask('default', [
+        'lesscss',
+        'cssmin:dist',
+        'jsdist',        
+    ]);
+
+    // tests
     grunt.registerTask('test', [
         'karma', //TODO
         'protractor' //TODO

@@ -12,7 +12,7 @@
             .config(['$routeProvider', ngComponents.router])
             .service('converterService', ngComponents.converterService)
             .service('postsService', ['$http', '$sce', 'converterService', ngComponents.postsService])
-            .controller('listController', ngComponents.listController)
+            .controller('listController', ['postsList', ngComponents.listController])
             .controller('detailsController', ['postDetails', ngComponents.detailsController]);
 
 })(angular, ngComponents);

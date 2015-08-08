@@ -1,9 +1,10 @@
 var ngComponents = ngComponents || {};
 
-ngComponents.listController = function () {
+ngComponents.listController = function (postsList) {
 
-    // TODO: how to get full list? use json config file?
-
+	var vm = this;
+    vm.list = postsList;
+    
 };
 
 ngComponents.detailsController = function (postDetails) {

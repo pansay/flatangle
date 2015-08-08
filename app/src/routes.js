@@ -7,15 +7,19 @@ ngComponents.router = function ($routeProvider) {
     $routeProvider
         .when('/posts', {
             templateUrl: viewsFolder + 'list.html',
-            controller: 'listController'
+            controller: 'listController as posts',
+            resolve: {
+                postsList: ['postsService', function (postsService) {
+                    return postsService.getPosts();
+                }]
+            }
         })
-        .when('/posts/:postId', {
+        .when('/posts/:postAlias', {
             templateUrl: viewsFolder + 'details.html',
             controller: 'detailsController as post',
             resolve: {
-                postDetails: ['postsService', function (postsService) {
-                    var postId = '2014-08-16_flat-file-cms-ftw'; // TODO from param
-                    return postsService.getPost(postId);
+                postDetails: ['postsService', '$route', function (postsService, $route) {
+                    return postsService.getPost($route.current.params.postAlias);
                 }]
             }
         })
