@@ -1,0 +1,2 @@
+var json = json || {};
+json["posts"] = [{"location":"content/posts/2014-08-16_flat-file-cms-ftw.md","filename":"2014-08-16_flat-file-cms-ftw.md","type":"file","size":0.00207,"depth":2,"filetype":"md"}];
