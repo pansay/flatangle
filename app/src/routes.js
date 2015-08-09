@@ -9,8 +9,10 @@ ngComponents.router = function ($routeProvider, appUrls) {
             templateUrl: viewsFolder + 'list.html',
             controller: 'listController as posts',
             resolve: {
-                postsList: ['postsService', function (postsService) {
-                    return postsService.getPosts();
+                postsList: ['postsService', '$location', function (postsService, $location) {
+                    return postsService.getPosts().catch(function () {
+                        $location.path(appUrls.home); // redirect to home if posts list not found
+                    });
                 }]
             }
         })
@@ -19,8 +21,7 @@ ngComponents.router = function ($routeProvider, appUrls) {
             controller: 'detailsController as post',
             resolve: {
                 postDetails: ['postsService', '$route', '$location', function (postsService, $route, $location) {
-                    return postsService.getPost($route.current.params.postAlias).catch(function (reason) {
-                        console.log(reason);
+                    return postsService.getPost($route.current.params.postAlias).catch(function () {
                         $location.path(appUrls.home); // redirect to home if :postAlias not found
                     });
                 }]

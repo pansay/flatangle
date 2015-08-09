@@ -25,7 +25,7 @@ ngComponents.postsService = function ($http, $sce, $q, converterService) {
 
             return posts;
         }
-        return null;
+        return false;
     });
 
     var cache = {}; // object of cached full posts

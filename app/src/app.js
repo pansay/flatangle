@@ -14,9 +14,8 @@
 
     ng
         .module('flatAngle', modulesDependencies)
-        .constant('appUrls', appUrls)
-            .config(['$routeProvider', 'appUrls', ngComponents.router])            
             .constant('appUrls', appUrls)
+            .config(['$routeProvider', 'appUrls', ngComponents.router])            
             .service('converterService', ngComponents.converterService)
             .service('postsService', ['$http', '$sce', '$q', 'converterService', ngComponents.postsService])
             .controller('listController', ['postsList', ngComponents.listController])

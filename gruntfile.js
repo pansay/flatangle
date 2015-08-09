@@ -13,7 +13,8 @@ module.exports = function(grunt) {
             'app/src/routes.js',
             'app/src/services/converterService.js',
             'app/src/services/postsService-gh.js', // -gh, -grunt
-            'app/src/controllers.js',
+            'app/src/controllers/detailsController.js',
+            'app/src/controllers/listController.js',
             'app/src/app.js'
         ]
     };
