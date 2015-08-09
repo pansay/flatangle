@@ -31,7 +31,7 @@ FlatAngle: flatfile angular blog tool
 
 * browse on your github pages page
 
-## adding content
+## Adding content
 
 * use github directly to edit and preview markdown
 * edit markdown files and push to gh-pages branch
