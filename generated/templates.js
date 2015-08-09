@@ -3,7 +3,7 @@ angular.module('templates-main', ['app/templates/views/details.html', 'app/templ
 angular.module("app/templates/views/details.html", []).run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("app/templates/views/details.html",
-    "<a href=\"#/posts\">back to posts list</a><div class=\"post-content\" data-ng-show=\"post.details\" data-ng-bind-html=\"post.details\"></div><div data-ng-hide=\"post.details\">no post here</div>");
+    "<a href=\"#/posts\">back to posts list</a><div class=\"post-content\" data-ng-show=\"post.details\" data-ng-bind-html=\"post.details\"></div>");
 }]);
 
 angular.module("app/templates/views/list.html", []).run(["$templateCache", function($templateCache) {
