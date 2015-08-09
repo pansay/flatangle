@@ -7,9 +7,16 @@
         'templates-main' // pre-cached templates
     ];
 
+    var appUrls = {
+        'posts': '/posts'
+    };
+    appUrls.home = appUrls.posts;
+
     ng
         .module('flatAngle', modulesDependencies)
-            .config(['$routeProvider', ngComponents.router])
+        .constant('appUrls', appUrls)
+            .config(['$routeProvider', 'appUrls', ngComponents.router])            
+            .constant('appUrls', appUrls)
             .service('converterService', ngComponents.converterService)
             .service('postsService', ['$http', '$sce', 'converterService', ngComponents.postsService])
             .controller('listController', ['postsList', ngComponents.listController])

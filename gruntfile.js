@@ -11,7 +11,8 @@ module.exports = function(grunt) {
             //'generated/posts.js',
             'generated/config.js',
             'app/src/routes.js',
-            'app/src/services.js',
+            'app/src/services/converterService.js',
+            'app/src/services/postsService-gh.js', // -gh, -grunt
             'app/src/controllers.js',
             'app/src/app.js'
         ]

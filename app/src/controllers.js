@@ -2,7 +2,7 @@ var ngComponents = ngComponents || {};
 
 ngComponents.listController = function (postsList) {
 
-	var vm = this;
+    var vm = this;
     vm.list = postsList;
     
 };

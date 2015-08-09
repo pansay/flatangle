@@ -1,11 +1,11 @@
 var ngComponents = ngComponents || {};
 
-ngComponents.router = function ($routeProvider) {
+ngComponents.router = function ($routeProvider, appUrls) {
 
     var viewsFolder = 'app/templates/views/';
 
     $routeProvider
-        .when('/posts', {
+        .when(appUrls.posts, {
             templateUrl: viewsFolder + 'list.html',
             controller: 'listController as posts',
             resolve: {
@@ -14,17 +14,23 @@ ngComponents.router = function ($routeProvider) {
                 }]
             }
         })
-        .when('/posts/:postAlias', {
+        .when(appUrls.posts + '/:postAlias', {
             templateUrl: viewsFolder + 'details.html',
             controller: 'detailsController as post',
             resolve: {
-                postDetails: ['postsService', '$route', function (postsService, $route) {
-                    return postsService.getPost($route.current.params.postAlias);
+                postDetails: ['postsService', '$route', '$location', function (postsService, $route, $location) {
+                    var promise = postsService.getPost($route.current.params.postAlias);
+                    if (!promise) { // :postAlias not found
+                        $location.path(appUrls.home); // redirect to home
+                        return null; // angular weird behavior: 
+                        // the template is still parsed and null is the only value that doesn't trigger errors
+                    }
+                    return promise;
                 }]
             }
         })
         .otherwise({
-            redirectTo: '/posts'
+            redirectTo: appUrls.home
         });
 
 };
