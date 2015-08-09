@@ -2,7 +2,7 @@
 
 var ngComponents = ngComponents || {};
 
-ngComponents.postsService = function ($http, $sce, converterService) {
+ngComponents.postsService = function ($http, $sce, $q, converterService) {
 
     var postsUrl = 'content/posts/';
 
@@ -36,9 +36,12 @@ ngComponents.postsService = function ($http, $sce, converterService) {
 
     this.getPost = function (alias) {
 
+        var deferred = $q.defer();
+
         // already cached
         if (cache[alias]) {
-            return cache[alias];
+            deferred.resolve(cache[alias]);
+            return deferred.promise;
         }
 
         // not cached yet: get and cache
@@ -49,8 +52,9 @@ ngComponents.postsService = function ($http, $sce, converterService) {
                     return true;
                 }
             });
+            
             if (!matchedPosts.length) {
-                return null; // alias not found
+                return $q.reject('alias not found');
             }
 
             var url = matchedPosts[0].filepath;

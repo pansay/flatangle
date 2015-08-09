@@ -19,13 +19,10 @@ ngComponents.router = function ($routeProvider, appUrls) {
             controller: 'detailsController as post',
             resolve: {
                 postDetails: ['postsService', '$route', '$location', function (postsService, $route, $location) {
-                    var promise = postsService.getPost($route.current.params.postAlias);
-                    if (!promise) { // :postAlias not found
-                        $location.path(appUrls.home); // redirect to home
-                        return null; // angular weird behavior: 
-                        // the template is still parsed and null is the only value that doesn't trigger errors
-                    }
-                    return promise;
+                    return postsService.getPost($route.current.params.postAlias).catch(function (reason) {
+                        console.log(reason);
+                        $location.path(appUrls.home); // redirect to home if :postAlias not found
+                    });
                 }]
             }
         })
