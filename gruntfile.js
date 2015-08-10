@@ -141,7 +141,12 @@ module.exports = function(grunt) {
                 src: ['config.json'],
                 dest: 'generated/config.js'
             }
-        }
+        },
+        karma: {
+            all: {
+                configFile: 'karma.conf.js'
+            }
+        },
     });
 
     grunt.loadNpmTasks('grunt-contrib-htmlmin'); // minify html
@@ -158,6 +163,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-folder-list'); // generate json from a folder's files
     grunt.loadNpmTasks('grunt-json'); // convert it to js object
+
+    grunt.loadNpmTasks('grunt-karma'); // unit tests
 
 
     // merely update posts list
@@ -215,8 +222,8 @@ module.exports = function(grunt) {
 
     // tests
     grunt.registerTask('test', [
-        'karma', //TODO
-        'protractor' //TODO
+        'karma',
+        //'protractor' //TODO
     ]);
 
 };
