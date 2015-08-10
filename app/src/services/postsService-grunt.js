@@ -1,4 +1,4 @@
-/* global json */
+/* global posts */
 
 var ngComponents = ngComponents || {};
 

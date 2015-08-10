@@ -1,4 +1,4 @@
-/* global json */
+/* global config */
 
 var ngComponents = ngComponents || {};
 
@@ -6,7 +6,7 @@ ngComponents.postsService = function ($http, $sce, $q, converterService) {
 
     var postsUrl = 'content/posts/';
 
-    var postsListPromise = $http.get(json.config.apiUrl).then(function (response) {
+    var postsListPromise = $http.get(config.config.apiUrl).then(function (response) {
 
         if (response.data.length) {
 

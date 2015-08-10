@@ -10,9 +10,11 @@ module.exports = function(grunt) {
             'generated/templates.js',
             //'generated/posts.js',
             'generated/config.js',
+            'generated/texts.js',
             'app/src/routes.js',
             'app/src/services/converterService.js',
             'app/src/services/postsService-gh.js', // -gh, -grunt
+            'app/src/controllers/mainController.js',
             'app/src/controllers/detailsController.js',
             'app/src/controllers/listController.js',
             'app/src/app.js'
@@ -80,9 +82,10 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                'Gruntfile.js',
-                'karma.conf.js',
-                'app/**/*.js'
+                '*.js',
+                'config/*.js',
+                'app/**/*.js',
+                'tests/**/*.js'
             ]
         },
         uglify: {
@@ -118,35 +121,53 @@ module.exports = function(grunt) {
                 }
             }
         },
+        csvjson: {
+            texts: {
+                files: {
+                    'generated/texts/': ['content/texts/texts.csv']
+                }
+            }
+        },      
         json: {
             posts: {
                 options: {
-                    namespace: 'json',
+                    namespace: 'posts',
                     includePath: false,
                     processName: function(filename) {
                         return filename.toLowerCase();
                     }
                 },
-                src: ['generated/posts.json'],
+                src: 'generated/posts.json',
                 dest: 'generated/posts.js'
             },
             config: {
                 options: {
-                    namespace: 'json',
+                    namespace: 'config',
                     includePath: false,
                     processName: function(filename) {
                         return filename.toLowerCase();
                     }
                 },
-                src: ['config.json'],
+                src: 'config/config.json',
                 dest: 'generated/config.js'
-            }
+            },
+            texts: {
+                options: {
+                    namespace: 'texts',
+                    includePath: false,
+                    processName: function(filename) {
+                        return filename.toLowerCase();
+                    }
+                },
+                src: ['generated/texts/*.json'],
+                dest: 'generated/texts.js'
+            }            
         },
         karma: {
             all: {
-                configFile: 'karma.conf.js'
+                configFile: 'config/karma.conf.js'
             }
-        },
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-htmlmin'); // minify html
@@ -161,27 +182,35 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-html2js'); // precache angular templates
 
-    grunt.loadNpmTasks('grunt-folder-list'); // generate json from a folder's files
-    grunt.loadNpmTasks('grunt-json'); // convert it to js object
+    // grunt.loadNpmTasks('grunt-folder-list'); // generate json from a folder's files
+    grunt.loadNpmTasks('grunt-csv-json'); // generate json from csv
+    grunt.loadNpmTasks('grunt-json'); // convert that json to js object
 
     grunt.loadNpmTasks('grunt-karma'); // unit tests
 
 
     // merely update posts list
-    grunt.registerTask('posts', [
-        'folder_list:posts',
-        'json:posts'
+    // grunt.registerTask('posts', [
+    //     'folder_list:posts',
+    //     'json:posts'
+    // ]);
+
+    // merely update texts
+    grunt.registerTask('texts', [
+        'csvjson:texts',
+        'json:texts'
     ]);
 
     // merely update posts list and refresh app js with it
-    grunt.registerTask('update', [
-        //'posts',
-        'uglify:dist'
-    ]);
+    // grunt.registerTask('update', [
+    //     'posts',
+    //     'uglify:dist'
+    // ]);
 
     // just js/html dev
     grunt.registerTask('jsdev', [
         //'posts',
+        'texts',
         'json:config',
         'html2js:main',
         'jshint',
@@ -193,6 +222,7 @@ module.exports = function(grunt) {
     // just js/html dist
     grunt.registerTask('jsdist', [
         //'posts',
+        'texts',
         'json:config',
         'html2js:main',
         'jshint',
@@ -222,7 +252,7 @@ module.exports = function(grunt) {
 
     // tests
     grunt.registerTask('test', [
-        'karma',
+        'karma'
         //'protractor' //TODO
     ]);
 

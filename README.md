@@ -5,14 +5,16 @@ FlatAngle: flatfile angular blog tool
 ## Features
 
 * flat file blog
-* markdown text files
+* markdown text files (blog posts)
+* csv files (translation)
 * pure client-side angular
 * unlicensed. no licensed code included.
 * cached XHRs for posts
 * precached angular templates
 * html, css/less and js minification and validation
-* karma unit tests (TODO)
+* karma unit tests (set up, coverage yet to improve)
 * protractor e2e tests (TODO)
+* either work directly from your text editor or use github as a CMS (great for markdown and CSV files)
 
 ## Installation
 
