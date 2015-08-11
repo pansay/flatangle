@@ -60,10 +60,10 @@ module.exports = function(config) {
     ],
 
     coverageReporter: {
-        dir: 'reports/coverage',
+        dir: '../reports',
         reporters: [
             { type: 'text'},
-            { type: 'html', subdir: 'report-html'}
+            { type: 'html', subdir: 'coverage'}
         ]
     },
 

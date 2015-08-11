@@ -13,7 +13,7 @@ FlatAngle: flatfile angular blog tool
 * precached angular templates
 * html, css/less and js minification and validation
 * karma unit tests (set up, coverage yet to improve)
-* protractor e2e tests (TODO)
+* protractor e2e tests (set up, coverage yet to improve)
 * either work directly from your text editor or use github as a CMS (great for markdown and CSV files)
 
 ## Installation

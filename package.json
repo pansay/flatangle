@@ -7,7 +7,8 @@
     "postinstall": "bower install",
     "prestart": "grunt",
     "start": "http-server -a 0.0.0.0 -p 8000",
-    "test": "grunt test"
+    "test": "grunt test",
+    "protractor": "protractor config/protractor.conf.js"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma-coverage": "^0.4.2",
     "karma-jasmine": "^0.3.6",
-    "karma-spec-reporter": "0.0.20"
+    "karma-spec-reporter": "0.0.20",
+    "protractor": "~2.1.0"
   }
 }
