@@ -3,7 +3,7 @@
 <p>{{texts.postsList}}</p>
 
 <ul data-ng-show="posts.list">
-    <li data-ng-repeat="post in posts.list">
+    <li data-ng-repeat="post in posts.list | orderBy: '-date'">
         <a href="#" data-ng-href="#/posts/{{post.alias}}">{{post.date}} - {{post.alias}}</a>
     </li>
 </ul>
