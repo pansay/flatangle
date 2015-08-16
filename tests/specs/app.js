@@ -1,16 +1,26 @@
 'use strict';
 
-/* global describe, inject, module, expect, it, beforeEach, angular */
+/* global describe, inject, module, expect, it, beforeEach, angular, getModuleProviders */
 
 describe('flatAngle app', function() {
 
+    var actual = {},
+        injected = {},
+        expected = {};
+
+    actual.module = angular.module('flatAngle');
+    actual.constants = getModuleProviders(actual.module).constant;
+
+    expected.dependencies = ['ngRoute', 'templates-main'];
+    expected.constants = ['texts', 'appUrls', 'homeUrl', 'apiUrl', 'showdown'];
+
 	it('should be defined', function() {
-		expect(angular.module('flatAngle')).toBeDefined();
-	});
+        expect(actual.module).toBeDefined();
+    });
 
-	beforeEach(module('flatAngle'));
-
-    var injected = {};
+    it('should have all its dependencies set', function() {
+        expect(actual.module.requires).toEqual(expected.dependencies);
+    });
 
     /* we have to be careful because some variables are globals, thus we distinguish 
 
@@ -22,6 +32,7 @@ describe('flatAngle app', function() {
 
     */
 
+    beforeEach(module('flatAngle'));
     beforeEach(inject(function(_texts_, _appUrls_, _homeUrl_, _apiUrl_, _showdown_) {
         injected.texts = _texts_;
         injected.appUrls = _appUrls_;
@@ -30,14 +41,15 @@ describe('flatAngle app', function() {
         injected.showdown =  _showdown_;
     }));
 
-    it('should have constants correctly passed', function() {
+    it('should have all of its constants set', function() {
 
-        expect(injected.texts).toBeDefined();
-        expect(injected.appUrls).toBeDefined();
-        expect(injected.homeUrl).toBeDefined();
-        expect(injected.apiUrl).toBeDefined();
-        expect(injected.showdown).toBeDefined();
+        expect(actual.constants).toEqual(expected.constants);
 
+        // this ensures we didn't forget anything in the inject above
+        for (var i = actual.constants.length - 1; i >= 0 ; i--) {
+            expect(injected[actual.constants[i]]).toBeDefined();
+        }
+        
         /* global texts, config, showdown */
         expect(injected.texts).toBe(texts[config.config.lang]);
         expect(injected.appUrls).toBe(config.config.appUrls);

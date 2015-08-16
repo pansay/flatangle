@@ -14,31 +14,27 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        // libs
+
+        // same as main app in gruntfile.js, just copy and paste it, be sure not to omit anything
+        // TODO maybe extract it to a config json file, just to be sure...
         'bower_components/angular/angular.min.js',
         'bower_components/angular-route/angular-route.min.js',
         'bower_components/showdown/dist/showdown.min.js',
-
-        // mock libs
-        'bower_components/angular-mocks/angular-mocks.js',
-
-        // templates
         'generated/templates.js',
-
-        // mocks / static data
-        'generated/config.js',
-        'generated/texts.js',
-
-        //tested
+        //'generated/posts.js',
         'generated/config.js',
         'generated/texts.js',
         'app/src/routes.js',
         'app/src/services/converterService.js',
         'app/src/services/postsService-gh.js', // -gh, -grunt
-        'app/src/controllers/*.js',
+        'app/src/controllers/mainController.js',
+        'app/src/controllers/detailsController.js',
+        'app/src/controllers/listController.js',
         'app/src/app.js',
 
-        // tests
+        // karma specific
+        'bower_components/angular-mocks/angular-mocks.js',
+        'tests/helpers/*.js',
         'tests/specs/**/*.js'
     ],
 
@@ -64,7 +60,7 @@ module.exports = function(config) {
     ],
 
     coverageReporter: {
-        dir: '../reports',
+        dir: 'reports',
         reporters: [
             { type: 'text'},
             { type: 'html', subdir: 'coverage'}
@@ -83,21 +79,28 @@ module.exports = function(config) {
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     //logLevel: config.LOG_DEBUG,
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_ERROR,
 
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
 
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: true,
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: [
+        //'Chrome',
+        'PhantomJS'
+    ],
+ 
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom) 
+      exitOnResourceError: true
+    }
 
   });
 };
