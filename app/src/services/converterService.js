@@ -1,8 +1,8 @@
-/* global showdown */
+'use strict';
 
 var ngComponents = ngComponents || {};
 
-ngComponents.converterService = function () {
+ngComponents.converterService = function (showdown) {
 
     var markdownConverter = new showdown.Converter();
 

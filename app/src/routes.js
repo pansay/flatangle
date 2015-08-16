@@ -1,6 +1,8 @@
+'use strict';
+
 var ngComponents = ngComponents || {};
 
-ngComponents.router = function ($routeProvider, appUrls) {
+ngComponents.router = function ($routeProvider, appUrls, homeUrl) {
 
     var viewsFolder = 'app/templates/views/';
 
@@ -28,7 +30,7 @@ ngComponents.router = function ($routeProvider, appUrls) {
             }
         })
         .otherwise({
-            redirectTo: appUrls.home
+            redirectTo: homeUrl
         });
 
 };

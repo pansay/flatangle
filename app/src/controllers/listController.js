@@ -1,3 +1,5 @@
+'use strict';
+
 var ngComponents = ngComponents || {};
 
 ngComponents.listController = function (postsList) {

@@ -1,4 +1,9 @@
-/* global posts */
+'use strict';
+
+// not maintained
+// TODO retest
+
+/* global json */
 
 var ngComponents = ngComponents || {};
 

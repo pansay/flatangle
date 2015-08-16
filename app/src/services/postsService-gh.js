@@ -1,12 +1,12 @@
-/* global config */
+'use strict';
 
 var ngComponents = ngComponents || {};
 
-ngComponents.postsService = function ($http, $sce, $q, converterService) {
+ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl) {
 
     var postsUrl = 'content/posts/';
 
-    var postsListPromise = $http.get(config.config.apiUrl).then(function (response) {
+    var postsListPromise = $http.get(apiUrl).then(function (response) {
 
         if (response.data.length) {
 
@@ -18,8 +18,8 @@ ngComponents.postsService = function ($http, $sce, $q, converterService) {
                 post.fileParts = post.name.split('_');
                 posts.push({
                     'date': post.fileParts[0],
-                    'alias': post.fileParts[1],
-                    'filepath': post.download_url
+                    'alias': post.fileParts[1],/* jshint camelcase: false */
+                    'filepath': post.download_url /* jshint camelcase: true */
                 });
             }
 

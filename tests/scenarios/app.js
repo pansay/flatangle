@@ -1,3 +1,7 @@
+'use strict';
+
+/* global describe, expect, browser, element, it, by */
+
 describe('FlatAngle', function() {
 
     it('should redirect to #posts', function() {

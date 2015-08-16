@@ -1,12 +1,11 @@
-// Karma configuration
-// Generated on Mon Aug 10 2015 19:39:37 GMT+0200 (CEST)
+'use strict';
+/* global module */
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../',
-
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -17,17 +16,22 @@ module.exports = function(config) {
     files: [
         // libs
         'bower_components/angular/angular.min.js',
-        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-route/angular-route.min.js',
         'bower_components/showdown/dist/showdown.min.js',
 
         // mock libs
         'bower_components/angular-mocks/angular-mocks.js',
 
+        // templates
+        'generated/templates.js',
+
         // mocks / static data
         'generated/config.js',
         'generated/texts.js',
 
-        // tested
+        //tested
+        'generated/config.js',
+        'generated/texts.js',
         'app/src/routes.js',
         'app/src/services/converterService.js',
         'app/src/services/postsService-gh.js', // -gh, -grunt
@@ -79,7 +83,7 @@ module.exports = function(config) {
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     //logLevel: config.LOG_DEBUG,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -94,5 +98,6 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
+
   });
 };
