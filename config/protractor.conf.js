@@ -3,23 +3,23 @@
 /* global exports */
 
 exports.config = {
-  allScriptsTimeout: 11000,
+    allScriptsTimeout: 11000,
 
-  specs: [
-    '../tests/scenarios/app.js'
-  ],
+    specs: [
+        '../tests/scenarios/app.js'
+    ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+    capabilities: {
+        'browserName': 'chrome'
+    },
 
-  chromeOnly: true,
+    chromeOnly: true,
 
-  baseUrl: 'http://localhost:8000/',
+    baseUrl: 'http://localhost:8000/',
 
-  framework: 'jasmine',
+    framework: 'jasmine',
 
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
-  }
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 30000
+    }
 };

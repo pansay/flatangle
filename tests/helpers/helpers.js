@@ -1,5 +1,6 @@
 'use strict';
 
+/* exported getModuleProviders */
 function getModuleProviders (angularModule) {
     var providers = angularModule._invokeQueue,
         arrangedProviders = {

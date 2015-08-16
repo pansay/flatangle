@@ -4,8 +4,7 @@
 
 describe('converterService', function () {
 
-    var injected = {},
-        mocked = {};
+    var injected = {};
 
     beforeEach(module('flatAngle'));
     beforeEach(inject(function (_converterService_) {

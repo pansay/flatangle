@@ -1,3 +1,20 @@
 {
-  "disallowTrailingWhitespace": true
+    "disallowTrailingWhitespace": true,
+    "requireOperatorBeforeLineBreak": true,
+    "validateIndentation": 4,
+    "disallowMixedSpacesAndTabs": true,
+    "requireSpaceAfterKeywords": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "return",
+        "try",
+        "catch"
+    ],
+    "requireSpacesInFunctionExpression": {
+        "beforeOpeningCurlyBrace": true
+    }
 }

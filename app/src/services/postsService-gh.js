@@ -4,7 +4,7 @@ var ngComponents = ngComponents || {};
 
 ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl) {
 
-    var postsUrl = 'content/posts/';
+    //var postsUrl = 'content/posts/';
 
     var postsListPromise = $http.get(apiUrl).then(function (response) {
 

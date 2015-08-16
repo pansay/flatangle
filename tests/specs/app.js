@@ -14,7 +14,7 @@ describe('flatAngle app', function() {
     expected.dependencies = ['ngRoute', 'templates-main'];
     expected.constants = ['texts', 'appUrls', 'homeUrl', 'apiUrl', 'showdown'];
 
-	it('should be defined', function() {
+    it('should be defined', function() {
         expect(actual.module).toBeDefined();
     });
 
