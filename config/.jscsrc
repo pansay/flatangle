@@ -1,8 +1,11 @@
 {
-    "disallowTrailingWhitespace": true,
     "requireOperatorBeforeLineBreak": true,
     "validateIndentation": 4,
+    "disallowMultipleLineStrings": true,
     "disallowMixedSpacesAndTabs": true,
+    "disallowTrailingWhitespace": true,
+    "disallowSpaceAfterPrefixUnaryOperators": true,
+    "disallowSpaceBeforePostfixUnaryOperators": true,
     "requireSpaceAfterKeywords": [
         "if",
         "else",
@@ -14,7 +17,12 @@
         "try",
         "catch"
     ],
+    "requireSpaceBeforeBinaryOperators": true,
+    "requireSpaceAfterBinaryOperators": true,
+    "requireSpacesInConditionalExpression": true,
+    "requireSpaceBeforeBlockStatements": true,
     "requireSpacesInFunctionExpression": {
         "beforeOpeningCurlyBrace": true
-    }
+    },
+    "disallowNewlineBeforeBlockStatements": true
 }
