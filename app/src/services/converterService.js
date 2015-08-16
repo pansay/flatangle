@@ -6,7 +6,7 @@ ngComponents.converterService = function (showdown) {
 
     var markdownConverter = new showdown.Converter();
 
-    this.makeHtml = function (text) {
+    this.markdownToHtml = function (text) {
         return markdownConverter.makeHtml(text);
     };
 

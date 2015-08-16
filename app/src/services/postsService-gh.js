@@ -60,7 +60,7 @@ ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl)
             var url = matchedPosts[0].filepath;
 
             return $http.get(url).then(function (response) {
-                var postContent = converterService.makeHtml(response.data);
+                var postContent = converterService.markdownToHtml(response.data);
                 postContent = $sce.trustAsHtml(postContent);
                 cache[alias] = postContent;
                 return cache[alias];
