@@ -52,7 +52,7 @@ ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl)
                     return true;
                 }
             });
-            
+
             if (!matchedPosts.length) {
                 return $q.reject('alias not found');
             }
@@ -62,11 +62,11 @@ ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl)
             return $http.get(url).then(function (response) {
                 var postContent = converterService.makeHtml(response.data);
                 postContent = $sce.trustAsHtml(postContent);
-                cache[alias] = postContent;                
+                cache[alias] = postContent;
                 return cache[alias];
             });
-            
+
         });
-        
+
     };
 };

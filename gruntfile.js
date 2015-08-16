@@ -84,6 +84,17 @@ module.exports = function(grunt) {
                 }
             }
         },
+        jscs: {
+            all: [
+                '*.js',
+                'config/*.js',
+                'app/**/*.js',
+                'tests/**/*.js'
+            ],
+            options: {
+                config: 'config/.jscsrc'
+            }
+        },
         jshint: {
             all: [
                 '*.js',
@@ -412,7 +423,7 @@ module.exports = function(grunt) {
                     'generated/texts/': ['content/texts/texts.csv']
                 }
             }
-        },      
+        },
         json: {
             posts: {
                 options: {
@@ -446,7 +457,7 @@ module.exports = function(grunt) {
                 },
                 src: ['generated/texts/*.json'],
                 dest: 'generated/texts.js'
-            }            
+            }
         },
         karma: {
             all: {
@@ -463,6 +474,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin'); // minify css
 
     grunt.loadNpmTasks('grunt-contrib-jshint'); // validate js
+    grunt.loadNpmTasks("grunt-jscs"); // validate js some more
     grunt.loadNpmTasks('grunt-contrib-uglify'); // minify js
 
     grunt.loadNpmTasks('grunt-html2js'); // precache angular templates
@@ -499,6 +511,7 @@ module.exports = function(grunt) {
         'json:config',
         'html2js:main',
         'jshint',
+        'jscs',
         'uglify:dev',
         'htmlmin:dev',
         'htmllint'
@@ -511,6 +524,7 @@ module.exports = function(grunt) {
         'json:config',
         'html2js:main',
         'jshint',
+        'jscs',
         'uglify:dist',
         'htmlmin:dist',
         'htmllint'

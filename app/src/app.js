@@ -26,10 +26,10 @@ showdown (vendor markdown converter)
             .constant('homeUrl', config.config.appUrls[config.config.home])
             .constant('apiUrl', config.config.apiUrl)
             .constant('showdown', showdown)
-            .config(['$routeProvider', 'appUrls', 'homeUrl', ngComponents.router])            
+            .config(['$routeProvider', 'appUrls', 'homeUrl', ngComponents.router])
             .service('converterService', ['showdown', ngComponents.converterService])
             .service('postsService', ['$http', '$sce', '$q', 'converterService', 'apiUrl', ngComponents.postsService])
-            .controller('mainController', ['$scope', 'texts', ngComponents.mainController])           
+            .controller('mainController', ['$scope', 'texts', ngComponents.mainController])
             .controller('listController', ['postsList', ngComponents.listController])
             .controller('detailsController', ['postDetails', ngComponents.detailsController]);
 

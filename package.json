@@ -8,6 +8,7 @@
     "prestart": "grunt",
     "start": "http-server -a 0.0.0.0 -p 8000",
     "test": "grunt test",
+    "webdriver-update": "webdriver-manager update",
     "protractor": "protractor config/protractor.conf.js"
   },
   "repository": {
@@ -30,17 +31,18 @@
   "dependencies": {
     "bower": "~1.4.1",
     "grunt": "^0.4.5",
-    "grunt-html2js": "~0.3.4",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-uglify": "^0.9.1",
+    "grunt-csv-json": "~0.1.0",
     "grunt-html": "^4.0.3",
-    "grunt-lesslint": "^1.1.14",
-    "http-server": "~0.8.0",
+    "grunt-html2js": "~0.3.4",
+    "grunt-jscs": "^2.1.0",
     "grunt-json": "~0.1.5",
-    "grunt-csv-json": "~0.1.0"
+    "grunt-lesslint": "^1.1.14",
+    "http-server": "~0.8.0"
   },
   "devDependencies": {
     "grunt-folder-list": "~1.1.0",

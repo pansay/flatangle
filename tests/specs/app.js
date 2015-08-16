@@ -22,7 +22,7 @@ describe('flatAngle app', function() {
         expect(actual.module.requires).toEqual(expected.dependencies);
     });
 
-    /* we have to be careful because some variables are globals, thus we distinguish 
+    /* we have to be careful because some variables are globals, thus we distinguish
 
     texts: global
     _texts_ : reference to the 'texts' string in .constant('texts') (it could be texts here, but let's keep it clear)
@@ -49,7 +49,7 @@ describe('flatAngle app', function() {
         for (var i = actual.constants.length - 1; i >= 0 ; i--) {
             expect(injected[actual.constants[i]]).toBeDefined();
         }
-        
+
         /* global texts, config, showdown */
         expect(injected.texts).toBe(texts[config.config.lang]);
         expect(injected.appUrls).toBe(config.config.appUrls);

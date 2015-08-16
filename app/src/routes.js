@@ -24,7 +24,7 @@ ngComponents.router = function ($routeProvider, appUrls, homeUrl) {
             resolve: {
                 postDetails: ['postsService', '$route', '$location', function (postsService, $route, $location) {
                     return postsService.getPost($route.current.params.postAlias).catch(function () {
-                        $location.path(appUrls.home); // redirect to home if :postAlias not found
+                        $location.path(homeUrl); // redirect to home if :postAlias not found
                     });
                 }]
             }

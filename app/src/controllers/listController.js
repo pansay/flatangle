@@ -6,5 +6,5 @@ ngComponents.listController = function (postsList) {
 
     var vm = this;
     vm.list = postsList;
-    
+
 };

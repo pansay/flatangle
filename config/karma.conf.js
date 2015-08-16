@@ -96,9 +96,9 @@ module.exports = function(config) {
         //'Chrome',
         'PhantomJS'
     ],
- 
+
     phantomjsLauncher: {
-      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom) 
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
       exitOnResourceError: true
     }
 
