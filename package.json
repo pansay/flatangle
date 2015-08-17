@@ -7,9 +7,8 @@
     "postinstall": "bower install",
     "prestart": "grunt",
     "start": "http-server -a 0.0.0.0 -p 8000",
-    "pregrunttest": "grunt",
-    "grunttest": "grunt test",
-    "test": "npm run grunttest",
+    "pretest": "grunt",
+    "test": "grunt test",
     "webdriver-update": "webdriver-manager update",
     "protractor": "protractor config/protractor.conf.js"
   },
@@ -45,7 +44,8 @@
     "grunt-json": "~0.1.5",
     "grunt-jsonlint": "^1.0.4",
     "grunt-lesslint": "^1.1.14",
-    "http-server": "~0.8.0"
+    "http-server": "~0.8.0",
+    "grunt-cli": "~0.1.13"
   },
   "devDependencies": {
     "grunt-folder-list": "~1.1.0",
