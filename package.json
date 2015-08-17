@@ -7,7 +7,9 @@
     "postinstall": "bower install",
     "prestart": "grunt",
     "start": "http-server -a 0.0.0.0 -p 8000",
-    "test": "grunt test",
+    "pregrunttest": "grunt",
+    "grunttest": "grunt test",
+    "test": "npm run grunttest",
     "webdriver-update": "webdriver-manager update",
     "protractor": "protractor config/protractor.conf.js"
   },
