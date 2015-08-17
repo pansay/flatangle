@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/pansay/flatangle.svg?branch=master)](https://travis-ci.org/pansay/flatangle)
+
+
 # flatangle
 
 FlatAngle: flatfile angular blog tool
