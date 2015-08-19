@@ -18,8 +18,8 @@ ngComponents.postsService = function ($http, $sce, $q, converterService, apiUrl)
                 post.fileParts = post.name.split('_');
                 posts.push({
                     'date': post.fileParts[0],
-                    'alias': post.fileParts[1],/* jshint camelcase: false */
-                    'filepath': post.download_url /* jshint camelcase: true */
+                    'alias': post.fileParts[1],
+                    'filepath': post.download_url
                 });
             }
 
