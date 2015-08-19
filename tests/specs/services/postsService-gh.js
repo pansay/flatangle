@@ -38,9 +38,10 @@ describe('postsService (github)', function () {
     beforeEach(module(function ($provide) {
         $provide.constant('apiUrl', mocked.apiUrl);
     }));
-    beforeEach(inject(function (_postsService_, _$httpBackend_) {
+    beforeEach(inject(function (_postsService_, _$httpBackend_, _$browser_) {
         injected.postsService = _postsService_;
         mocked.http = _$httpBackend_;
+        injected.browser = _$browser_;
     }));
 
     it('should be defined', function () {
@@ -129,29 +130,41 @@ describe('postsService (github)', function () {
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
-
             mocked.http.flush();
 
             expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
 
             // test caching too
-            // spy on postsListPromise
 
-            // resolved.post = null;
-            // resolved.errorReason = null;
+            resolved.post = null;
+            resolved.errorReason = null;
 
-            // mocked.promise2 = injected.postsService.getPost(mocked.goodAlias);
-            // mocked.promise2.then(function (response) {
-            //     resolved.post = response;
-            // }, function (reason) {
-            //     resolved.errorReason = reason;
-            // });
+            // this promise should return the data cached
+            // from the previous requests
+            // not make new ones
+            mocked.promise = injected.postsService.getPost(mocked.goodAlias);
+            mocked.promise.then(function (response) {
+                resolved.post = response;
+            }, function (reason) {
+                resolved.errorReason = reason;
+            });
 
-            // // should not have to flush
+            // verify that no requests were made
+            // these are documented ng features that do not work
+            // https://github.com/angular/angular.js/issues/5453
+            // mocked.http.verifyNoOutstandingExpectation();
+            // mocked.http.verifyNoOutstandingRequest();
+            // this works
+            expect(mocked.http.flush).toThrowError('No pending request to flush !');
 
-            // expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
-            // expect(resolved.errorReason).toBeNull();
+            // flush the deferreds
+            // this is an udocumented ng feature that works
+            // https://github.com/angular/angular.js/blob/f81ff3beb0c9d19d494c5878086fb57476442b8b/src/ng/browser.js
+            injected.browser.defer.flush();
+
+            expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
+            expect(resolved.errorReason).toBeNull();
 
         });
     });
