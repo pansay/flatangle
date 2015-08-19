@@ -20,7 +20,6 @@ describe('postsService (github)', function () {
             'download_url': mocked.downloadUrl
         }
     ];
-    mocked.badPost = {'ghi': 'jkl'};
     mocked.badAlias = 'toto';
     mocked.goodPost = 'hello *world*';
 
@@ -88,13 +87,14 @@ describe('postsService (github)', function () {
 
     describe('getPost', function () {
 
-        it('should return rejected promise with bad alias', function () {
-
+        beforeEach(function () {
             mocked.http.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
-            mocked.http.when('GET', mocked.downloadUrl).respond(mocked.badPost);
-
+            mocked.http.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
             resolved.post = null;
             resolved.errorReason = null;
+        });
+
+        it('should return rejected promise if called with bad alias', function () {
 
             mocked.promise = injected.postsService.getPost(mocked.badAlias);
             mocked.promise.then(function (response) {
@@ -113,13 +113,7 @@ describe('postsService (github)', function () {
 
         });
 
-        it('should return promise resolving to post with good alias', function () {
-
-            mocked.http.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
-            mocked.http.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
-
-            resolved.post = null;
-            resolved.errorReason = null;
+        it('should return promise resolving to post if called with good alias', function () {
 
             mocked.promise = injected.postsService.getPost(mocked.goodAlias);
             mocked.promise.then(function (response) {
@@ -135,10 +129,17 @@ describe('postsService (github)', function () {
             expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
 
-            // test caching too
+        });
 
-            resolved.post = null;
-            resolved.errorReason = null;
+        it('should return promise resolving to post from cache if called with good alias a second time', function () {
+
+            mocked.promise = injected.postsService.getPost(mocked.goodAlias);
+
+            expect(mocked.http.flush).not.toThrow();
+            expect(mocked.http.flush).toThrow();
+
+            expect(resolved.post).toBeNull();
+            expect(resolved.errorReason).toBeNull();
 
             // this promise should return the data cached
             // from the previous requests
@@ -150,7 +151,10 @@ describe('postsService (github)', function () {
                 resolved.errorReason = reason;
             });
 
-            // verify that no requests were made
+            expect(resolved.post).toBeNull();
+            expect(resolved.errorReason).toBeNull();
+
+            // assert that no more requests are pending
             // these are documented ng features that do not work
             // https://github.com/angular/angular.js/issues/5453
             // mocked.http.verifyNoOutstandingExpectation();
