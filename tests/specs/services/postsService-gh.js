@@ -37,10 +37,10 @@ describe('postsService (github)', function () {
     beforeEach(module(function ($provide) {
         $provide.constant('apiUrl', mocked.apiUrl);
     }));
-    beforeEach(inject(function (_postsService_, _$httpBackend_, _$browser_) {
+    beforeEach(inject(function (_postsService_, _$httpBackend_, _$timeout_) {
         injected.postsService = _postsService_;
         mocked.http = _$httpBackend_;
-        injected.browser = _$browser_;
+        injected.timeout = _$timeout_;
     }));
 
     it('should be defined', function () {
@@ -142,8 +142,8 @@ describe('postsService (github)', function () {
             expect(resolved.errorReason).toBeNull();
 
             // this promise should return the data cached
-            // from the previous requests
-            // not make new ones
+            // from the previous request
+            // not make a new one
             mocked.promise = injected.postsService.getPost(mocked.goodAlias);
             mocked.promise.then(function (response) {
                 resolved.post = response;
@@ -154,18 +154,11 @@ describe('postsService (github)', function () {
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
 
-            // assert that no more requests are pending
-            // these are documented ng features that do not work
-            // https://github.com/angular/angular.js/issues/5453
-            // mocked.http.verifyNoOutstandingExpectation();
-            // mocked.http.verifyNoOutstandingRequest();
-            // this works
+            // assert that no requests were made
             expect(mocked.http.flush).toThrowError('No pending request to flush !');
 
             // flush the deferreds
-            // this is an udocumented ng feature that works
-            // https://github.com/angular/angular.js/blob/f81ff3beb0c9d19d494c5878086fb57476442b8b/src/ng/browser.js
-            injected.browser.defer.flush();
+            injected.timeout.flush();
 
             expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
