@@ -1,10 +1,22 @@
 'use strict';
 
-var ngComponents = ngComponents || {};
+/* global angular */
 
-ngComponents.mainController = function ($scope, texts) {
+(function (ng) {
 
-    $scope.texts = texts;
-    $scope.title = texts.title;
+    var mainController = function ($scope, texts) {
 
-};
+        $scope.texts = texts;
+        $scope.title = texts.title;
+
+    };
+
+    ng
+        .module('flatAngle')
+            .controller('mainController', [
+                '$scope',
+                'texts',
+                mainController
+            ]);
+
+})(angular);

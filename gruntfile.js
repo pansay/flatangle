@@ -15,13 +15,13 @@ module.exports = function(grunt) {
             //'generated/posts.js',
             'generated/config.js',
             'generated/texts.js',
+            'app/src/app.js',
             'app/src/routes.js',
             'app/src/services/converterService.js',
             'app/src/services/postsService-gh.js', // -gh, -grunt
             'app/src/controllers/mainController.js',
             'app/src/controllers/detailsController.js',
-            'app/src/controllers/listController.js',
-            'app/src/app.js'
+            'app/src/controllers/listController.js'
         ]
     };
 

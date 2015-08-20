@@ -1,10 +1,21 @@
 'use strict';
 
-var ngComponents = ngComponents || {};
+/* global angular */
 
-ngComponents.detailsController = function (postDetails) {
+(function (ng) {
 
-    var vm = this;
-    vm.details = postDetails;
+    var detailsController = function (postDetails) {
 
-};
+        var vm = this;
+        vm.details = postDetails;
+
+    };
+
+    ng
+        .module('flatAngle')
+            .controller('detailsController', [
+                'postDetails',
+                detailsController
+            ]);
+
+})(angular);

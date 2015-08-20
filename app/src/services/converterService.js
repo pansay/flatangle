@@ -1,13 +1,24 @@
 'use strict';
 
-var ngComponents = ngComponents || {};
+/* global angular */
 
-ngComponents.converterService = function (showdown) {
+(function (ng) {
 
-    var markdownConverter = new showdown.Converter();
+    var converterService = function (showdown) {
 
-    this.markdownToHtml = function (text) {
-        return markdownConverter.makeHtml(text);
+        var markdownConverter = new showdown.Converter();
+
+        this.markdownToHtml = function (text) {
+            return markdownConverter.makeHtml(text);
+        };
+
     };
 
-};
+    ng
+        .module('flatAngle')
+            .service('converterService', [
+                'showdown',
+                converterService
+            ]);
+
+})(angular);

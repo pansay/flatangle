@@ -1,10 +1,21 @@
 'use strict';
 
-var ngComponents = ngComponents || {};
+/* global angular */
 
-ngComponents.listController = function (postsList) {
+(function (ng) {
 
-    var vm = this;
-    vm.list = postsList;
+    var listController = function (postsList) {
 
-};
+        var vm = this;
+        vm.list = postsList;
+
+    };
+
+    ng
+        .module('flatAngle')
+            .controller('listController', [
+                'postsList',
+                listController
+            ]);
+
+})(angular);

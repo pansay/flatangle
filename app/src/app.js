@@ -1,6 +1,6 @@
 'use strict';
 
-/* global angular, ngComponents, texts, config, showdown */
+/* global angular, texts, config, showdown */
 
 /*
 
@@ -12,7 +12,7 @@ showdown (vendor markdown converter)
 
 */
 
-(function appClosure (ng, ngComponents, config, texts, showdown) {
+(function (ng, config, texts, showdown) {
 
     var modulesDependencies = [
         'ngRoute',
@@ -25,12 +25,6 @@ showdown (vendor markdown converter)
             .constant('appUrls', config.config.appUrls)
             .constant('homeUrl', config.config.appUrls[config.config.home])
             .constant('apiUrl', config.config.apiUrl)
-            .constant('showdown', showdown)
-            .config(['$routeProvider', 'appUrls', 'homeUrl', ngComponents.router])
-            .service('converterService', ['showdown', ngComponents.converterService])
-            .service('postsService', ['$http', '$sce', '$q', 'converterService', 'apiUrl', ngComponents.postsService])
-            .controller('mainController', ['$scope', 'texts', ngComponents.mainController])
-            .controller('listController', ['postsList', ngComponents.listController])
-            .controller('detailsController', ['postDetails', ngComponents.detailsController]);
+            .constant('showdown', showdown);
 
-})(angular, ngComponents, config, texts, showdown);
+})(angular, config, texts, showdown);
