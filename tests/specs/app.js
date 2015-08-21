@@ -22,23 +22,13 @@ describe('flatAngle app', function() {
         expect(actual.module.requires).toEqual(expected.dependencies);
     });
 
-    /* we have to be careful because some variables are globals, thus we distinguish
-
-    texts: global
-    _texts_ : reference to the 'texts' string in .constant('texts') (it could be texts here, but let's keep it clear)
-    injected.texts: injection result
-
-    etc.
-
-    */
-
     beforeEach(module('flatAngle'));
-    beforeEach(inject(function(_texts_, _appUrls_, _homeUrl_, _apiUrl_, _showdown_) {
-        injected.texts = _texts_;
-        injected.appUrls = _appUrls_;
-        injected.homeUrl = _homeUrl_;
-        injected.apiUrl = _apiUrl_;
-        injected.showdown =  _showdown_;
+    beforeEach(inject(function($injector) {
+        injected.texts = $injector.get('texts');
+        injected.appUrls = $injector.get('appUrls');
+        injected.homeUrl = $injector.get('homeUrl');
+        injected.apiUrl = $injector.get('apiUrl');
+        injected.showdown = $injector.get('showdown');
     }));
 
     it('should have all of its constants set', function() {

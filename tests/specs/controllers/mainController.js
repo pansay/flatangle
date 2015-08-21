@@ -7,14 +7,19 @@ describe('mainController', function () {
     var injected = {},
         mocked = {};
 
-    mocked.texts = {
-        'title': 'toto'
-    };
-
     beforeEach(module('flatAngle'));
-    beforeEach(inject(function (_$controller_) {
-        injected.scope = {};
-        injected.mainController = _$controller_('mainController', {'$scope': injected.scope, 'texts': mocked.texts});
+    beforeEach(inject(function ($injector) {
+        injected.$controller = $injector.get('$controller');
+        injected.$rootScope = $injector.get('$rootScope');
+        injected.$scope = injected.$rootScope.$new();
+        mocked.texts = {
+            'title': 'toto'
+        };
+        mocked.dependencies = {
+            $scope: injected.$scope,
+            texts: mocked.texts
+        };
+        injected.mainController = injected.$controller('mainController', mocked.dependencies);
     }));
 
     it('should be defined', function () {
@@ -22,11 +27,11 @@ describe('mainController', function () {
     });
 
     it('should pass `texts` to the scope', function () {
-        expect(injected.scope.texts).toBe(mocked.texts);
+        expect(injected.$scope.texts).toBe(mocked.texts);
     });
 
     it('should pass `title` to the scope', function () {
-        expect(injected.scope.texts.title).toBe(mocked.texts.title);
+        expect(injected.$scope.texts.title).toBe(mocked.texts.title);
     });
 
 });

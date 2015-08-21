@@ -7,8 +7,8 @@ describe('converterService', function () {
     var injected = {};
 
     beforeEach(module('flatAngle'));
-    beforeEach(inject(function (_converterService_) {
-        injected.converterService = _converterService_;
+    beforeEach(inject(function ($injector) {
+        injected.converterService = $injector.get('converterService');
     }));
 
     it('should be defined', function () {

@@ -7,13 +7,16 @@ describe('detailsController', function () {
     var injected = {},
         mocked = {};
 
-    mocked.postDetails = {
-        'abc': 'def'
-    };
-
     beforeEach(module('flatAngle'));
-    beforeEach(inject(function (_$controller_) {
-        injected.detailsController = _$controller_('detailsController', {'postDetails': mocked.postDetails});
+    beforeEach(inject(function ($injector) {
+        injected.$controller = $injector.get('$controller');
+        mocked.postDetails = {
+            'abc': 'def'
+        };
+        mocked.dependencies = {
+            'postDetails': mocked.postDetails
+        };
+        injected.detailsController = injected.$controller('detailsController', mocked.dependencies);
     }));
 
     it('should be defined', function () {

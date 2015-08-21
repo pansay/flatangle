@@ -37,10 +37,10 @@ describe('postsService (github)', function () {
     beforeEach(module(function ($provide) {
         $provide.constant('apiUrl', mocked.apiUrl);
     }));
-    beforeEach(inject(function (_postsService_, _$httpBackend_, _$timeout_) {
-        injected.postsService = _postsService_;
-        mocked.http = _$httpBackend_;
-        injected.timeout = _$timeout_;
+    beforeEach(inject(function ($injector) {
+        injected.postsService = $injector.get('postsService');
+        injected.$httpBackend = $injector.get('$httpBackend');
+        injected.$timeout = $injector.get('$timeout');
     }));
 
     it('should be defined', function () {
@@ -54,7 +54,7 @@ describe('postsService (github)', function () {
     describe('getPosts', function () {
 
         it('should return promise resolving to false with bad response', function () {
-            mocked.http.when('GET', mocked.apiUrl).respond(mocked.badPostsList);
+            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.badPostsList);
             resolved.postsList = null;
             mocked.promise = injected.postsService.getPosts();
             mocked.promise.then(function (response) {
@@ -62,12 +62,12 @@ describe('postsService (github)', function () {
             });
 
             expect(resolved.postsList).toBeNull();
-            mocked.http.flush();
+            injected.$httpBackend.flush();
             expect(resolved.postsList).toBe(false);
         });
 
         it('should return promise resolving to posts list with good response', function () {
-            mocked.http.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
+            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
             resolved.postsList = null;
             mocked.promise = injected.postsService.getPosts();
             mocked.promise.then(function (response) {
@@ -75,7 +75,7 @@ describe('postsService (github)', function () {
             });
 
             expect(resolved.postsList).toBeNull();
-            mocked.http.flush();
+            injected.$httpBackend.flush();
             expect(resolved.postsList).toEqual(expected.goodPostsList);
         });
 
@@ -88,8 +88,8 @@ describe('postsService (github)', function () {
     describe('getPost', function () {
 
         beforeEach(function () {
-            mocked.http.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
-            mocked.http.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
+            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
+            injected.$httpBackend.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
             resolved.post = null;
             resolved.errorReason = null;
         });
@@ -106,7 +106,7 @@ describe('postsService (github)', function () {
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
 
-            mocked.http.flush();
+            injected.$httpBackend.flush();
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBe(expected.errorReason);
@@ -124,7 +124,7 @@ describe('postsService (github)', function () {
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
-            mocked.http.flush();
+            injected.$httpBackend.flush();
 
             expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
@@ -135,8 +135,8 @@ describe('postsService (github)', function () {
 
             mocked.promise = injected.postsService.getPost(mocked.goodAlias);
 
-            expect(mocked.http.flush).not.toThrow();
-            expect(mocked.http.flush).toThrow();
+            expect(injected.$httpBackend.flush).not.toThrow();
+            expect(injected.$httpBackend.flush).toThrow();
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
@@ -155,10 +155,10 @@ describe('postsService (github)', function () {
             expect(resolved.errorReason).toBeNull();
 
             // assert that no requests were made
-            expect(mocked.http.flush).toThrowError('No pending request to flush !');
+            expect(injected.$httpBackend.flush).toThrowError('No pending request to flush !');
 
             // flush the deferreds
-            injected.timeout.flush();
+            injected.$timeout.flush();
 
             expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
