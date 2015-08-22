@@ -31,7 +31,6 @@ describe('postsService (github)', function () {
         }
     ];
     expected.goodPost = '<p>hello <em>world</em></p>';
-    expected.errorReason = 'alias not found';
 
     beforeEach(module('flatAngle'));
     beforeEach(module(function ($provide) {
@@ -53,30 +52,48 @@ describe('postsService (github)', function () {
 
     describe('getPosts', function () {
 
-        it('should return promise resolving to false with bad response', function () {
-            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.badPostsList);
+        beforeEach(function () {
             resolved.postsList = null;
+            resolved.errorReason = null;
+            expected.errorReason = 'no posts';
+        });
+
+        it('should return rejected promise with bad response', function () {
+            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.badPostsList);
+
             mocked.promise = injected.postsService.getPosts();
             mocked.promise.then(function (response) {
                 resolved.postsList = response;
+            }, function (reason) {
+                resolved.errorReason = reason;
             });
 
             expect(resolved.postsList).toBeNull();
+            expect(resolved.errorReason).toBeNull();
+
             injected.$httpBackend.flush();
-            expect(resolved.postsList).toBe(false);
+
+            expect(resolved.postsList).toBeNull();
+            expect(resolved.errorReason).toBe(expected.errorReason);
         });
 
         it('should return promise resolving to posts list with good response', function () {
             injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
-            resolved.postsList = null;
+
             mocked.promise = injected.postsService.getPosts();
             mocked.promise.then(function (response) {
                 resolved.postsList = response;
+            }, function (reason) {
+                resolved.errorReason = reason;
             });
 
             expect(resolved.postsList).toBeNull();
+            expect(resolved.errorReason).toBeNull();
+
             injected.$httpBackend.flush();
+
             expect(resolved.postsList).toEqual(expected.goodPostsList);
+            expect(resolved.errorReason).toBeNull();
         });
 
     });
@@ -92,6 +109,7 @@ describe('postsService (github)', function () {
             injected.$httpBackend.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
             resolved.post = null;
             resolved.errorReason = null;
+            expected.errorReason = 'alias not found';
         });
 
         it('should return rejected promise if called with bad alias', function () {

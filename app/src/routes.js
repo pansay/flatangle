@@ -13,9 +13,9 @@
                 templateUrl: viewsFolder + 'list.html',
                 controller: 'listController as posts',
                 resolve: {
-                    postsList: ['postsService', '$location', function (postsService, $location) {
+                    postsList: ['postsService', function (postsService) {
                         return postsService.getPosts().catch(function () {
-                            $location.path(appUrls.home); // redirect to home if posts list not found
+                            return false; // can't redirect, this is the default page
                         });
                     }]
                 }
