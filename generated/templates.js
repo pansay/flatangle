@@ -9,5 +9,5 @@ angular.module("app/templates/views/details.html", []).run(["$templateCache", fu
 angular.module("app/templates/views/list.html", []).run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("app/templates/views/list.html",
-    "<h1>{{texts.title}}</h1><p>{{texts.postsList}}</p><ul data-ng-show=\"posts.list\"><li data-ng-repeat=\"post in posts.list\"><a href=\"#\" data-ng-href=\"#/posts/{{post.alias}}\">{{post.date}} - {{post.alias}}</a></li></ul><p data-ng-hide=\"posts.list\">ø</p>");
+    "<h1>{{texts.title}}</h1><p>{{texts.postsList}}</p><ul data-ng-show=\"posts.list\"><li data-ng-repeat=\"post in posts.list | orderBy: '-date'\"><a href=\"#\" data-ng-href=\"#/posts/{{post.alias}}\">{{post.date}} - {{post.alias}}</a></li></ul><p data-ng-hide=\"posts.list\">ø</p>");
 }]);
