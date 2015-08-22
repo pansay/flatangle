@@ -27,7 +27,7 @@
 
                 return posts;
             }
-            return $q.reject('no posts');
+            return false;
         });
 
         var cache = {}; // object of cached full posts

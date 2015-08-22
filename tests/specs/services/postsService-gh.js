@@ -11,6 +11,7 @@ describe('postsService (github)', function () {
 
     mocked.apiUrl = 'mockedApiUrl';
     mocked.badPostsList = {'abc': 'def'};
+    mocked.emptyPostsList = [];
     mocked.downloadUrl = 'mockedDownloadUrl';
     mocked.goodAlias = 'hello-mock';
     mocked.goodDate = '2020-01-12';
@@ -58,8 +59,8 @@ describe('postsService (github)', function () {
             expected.errorReason = 'no posts';
         });
 
-        it('should return rejected promise with bad response', function () {
-            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.badPostsList);
+        it('should return false with empty response', function () {
+            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.emptyPostsList);
 
             mocked.promise = injected.postsService.getPosts();
             mocked.promise.then(function (response) {
@@ -73,8 +74,8 @@ describe('postsService (github)', function () {
 
             injected.$httpBackend.flush();
 
-            expect(resolved.postsList).toBeNull();
-            expect(resolved.errorReason).toBe(expected.errorReason);
+            expect(resolved.postsList).toBe(false);
+            expect(resolved.errorReason).toBeNull();
         });
 
         it('should return promise resolving to posts list with good response', function () {
