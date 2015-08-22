@@ -50,3 +50,8 @@ FlatAngle: flatfile angular blog tool
 
 * another possibility (commented out in the code) is to use grunt to generate a json of your files directly. This can be useful if you want a purely local (offline) server
 * using another APIs would be easy to implement, but Dropbox etc. APIs seem to suck so far
+
+## To do
+
+* meta title with page title
+* cached data to contain full text titles, lazy enhance the posts list
