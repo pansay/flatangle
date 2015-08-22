@@ -7,7 +7,6 @@
     var mainController = function ($scope, texts) {
 
         $scope.texts = texts;
-        $scope.title = texts.title;
 
     };
 

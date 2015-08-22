@@ -293,7 +293,6 @@ module.exports = function(grunt) {
     // tests
     grunt.registerTask('test', [
         'karma'
-        //'protractor' //TODO
     ]);
 
 };

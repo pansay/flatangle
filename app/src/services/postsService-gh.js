@@ -4,9 +4,9 @@
 
 (function (ng) {
 
-    var postsService = function ($http, $sce, $q, converterService, apiUrl) {
+    var postsService = function ($http, $q, converterService, apiUrl) {
 
-        //var postsUrl = 'content/posts/';
+        var cache = {}; // object of cached full posts
 
         var postsListPromise = $http.get(apiUrl).then(function (response) {
 
@@ -24,16 +24,19 @@
                         'filepath': post.download_url
                     });
                 }
-
                 return posts;
             }
             return false;
         });
 
-        var cache = {}; // object of cached full posts
-
         this.getPosts = function () {
-            return postsListPromise;
+            return postsListPromise.then(function (posts) {
+                /* global console */
+                console.log(cache);
+                // TODO enrich posts with cached data
+                // OR change posts to object, and just combine them...
+                return posts;
+            });
         };
 
         this.getPost = function (alias) {
@@ -59,12 +62,15 @@
                     return $q.reject('alias not found');
                 }
 
-                var url = matchedPosts[0].filepath;
+                var post = matchedPosts[0];
+                var url = post.filepath;
 
                 return $http.get(url).then(function (response) {
                     var postContent = converterService.markdownToHtml(response.data);
-                    postContent = $sce.trustAsHtml(postContent);
-                    cache[alias] = postContent;
+                    var firstLine = converterService.firstLine(postContent);
+                    cache[alias] = post;
+                    cache[alias].title = converterService.htmlToPlainText(firstLine);
+                    cache[alias].content = converterService.trustAsHtml(postContent);
                     return cache[alias];
                 });
 
@@ -77,7 +83,6 @@
         .module('flatAngle')
             .service('postsService', [
                 '$http',
-                '$sce',
                 '$q',
                 'converterService',
                 'apiUrl', postsService

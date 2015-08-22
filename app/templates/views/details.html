@@ -1,4 +1,5 @@
-
 <a href="#/posts">{{texts.backToPostsList}}</a>
 
-<div class="post-content" data-ng-show="post.details" data-ng-bind-html="post.details"></div>
+<p>{{post.details.date|date:'longDate'}}</p>
+
+<div class="post-content" data-ng-bind-html="post.details.content"></div>
