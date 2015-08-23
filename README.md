@@ -53,5 +53,4 @@ FlatAngle: flatfile angular blog tool
 
 ## To do
 
-* meta title with page title
-* cached data to contain full text titles, lazy enhance the posts list
+* lazy enhance the posts list by loading more posts in the background?
