@@ -8,8 +8,8 @@
 
         var markdownConverter = new showdown.Converter();
 
-        this.htmlToPlainText = function (text) {
-            return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+        this.htmlToPlainText = function (html) {
+            return html ? String(html).replace(/<[^>]+>/gm, '') : '';
         };
 
         this.firstLine = function (string) {

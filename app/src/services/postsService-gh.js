@@ -12,17 +12,19 @@
 
             if (response.data.length) {
 
-                var posts = [], // array of posts
-                    post;
+                var posts = {}, // object of posts
+                    post = {},
+                    tempPost = {};
 
-                while ( (post = response.data.shift()) ) {
-                    post.name = post.name.replace('.md', '');
-                    post.fileParts = post.name.split('_');
-                    posts.push({
-                        'date': post.fileParts[0],
-                        'alias': post.fileParts[1],
-                        'filepath': post.download_url
-                    });
+                while ( (tempPost = response.data.shift()) ) {
+                    tempPost.fileName = tempPost.name.replace('.md', '');
+                    tempPost.fileParts = tempPost.fileName.split('_');
+                    post = {};
+                    post.date = tempPost.fileParts[0];
+                    post.alias = tempPost.fileParts[1];
+                    post.filepath = tempPost.download_url;
+
+                    posts[post.alias] = post;
                 }
                 return posts;
             }
@@ -31,10 +33,7 @@
 
         this.getPosts = function () {
             return postsListPromise.then(function (posts) {
-                /* global console */
-                console.log(cache);
-                // TODO enrich posts with cached data
-                // OR change posts to object, and just combine them...
+                angular.extend(posts, cache);
                 return posts;
             });
         };
@@ -52,17 +51,12 @@
             // not cached yet: get and cache
             return postsListPromise.then(function (posts) {
 
-                var matchedPosts = posts.filter(function (obj) {
-                    if (obj.alias === alias) {
-                        return true;
-                    }
-                });
+                var post = posts[alias] || false;
 
-                if (!matchedPosts.length) {
+                if (!post) {
                     return $q.reject('alias not found');
                 }
 
-                var post = matchedPosts[0];
                 var url = post.filepath;
 
                 return $http.get(url).then(function (response) {

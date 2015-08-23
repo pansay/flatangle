@@ -24,13 +24,12 @@ describe('postsService (github)', function () {
     mocked.badAlias = 'toto';
     mocked.goodPost = 'hello *world*';
 
-    expected.goodPostsList = [
-        {
-            'date': mocked.goodDate,
-            'alias': mocked.goodAlias,
-            'filepath': mocked.downloadUrl
-        }
-    ];
+    expected.goodPostsList = {};
+    expected.goodPostsList[mocked.goodAlias] = {
+        'date': mocked.goodDate,
+        'alias': mocked.goodAlias,
+        'filepath': mocked.downloadUrl
+    };
     expected.goodPost = '<p>hello <em>world</em></p>';
 
     beforeEach(module('flatAngle'));
@@ -145,7 +144,7 @@ describe('postsService (github)', function () {
             expect(resolved.errorReason).toBeNull();
             injected.$httpBackend.flush();
 
-            expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
+            expect(resolved.post.content.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
 
         });
@@ -179,7 +178,7 @@ describe('postsService (github)', function () {
             // flush the deferreds
             injected.$timeout.flush();
 
-            expect(resolved.post.$$unwrapTrustedValue()).toBe(expected.goodPost);
+            expect(resolved.post.content.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
 
         });
