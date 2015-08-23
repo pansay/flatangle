@@ -132,6 +132,7 @@ module.exports = function(grunt) {
                     nonbsp: true,
                     nonew: true,
                     undef: false,
+                    devel: true,
                     shadow: 'outer',
                     strict: 'global',
                     globalstrict: true,
