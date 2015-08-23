@@ -97,25 +97,48 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            all: options.allJsFiles,
-            options: {
-                bitwise: true,
-                freeze: true,
-                curly: true,
-                eqeqeq: true,
-                futurehostile: true,
-                forin: true,
-                noarg: true,
-                nocomma: true,
-                nonbsp: true,
-                nonew: true,
-                undef: true,
-                shadow: 'outer',
-                strict: 'global',
-                globalstrict: true,
-                latedef: true,
-                unused: 'strict'
+            dist: {
+                src: options.allJsFiles,
+                options: {
+                    bitwise: true,
+                    freeze: true,
+                    curly: true,
+                    eqeqeq: true,
+                    futurehostile: true,
+                    forin: true,
+                    noarg: true,
+                    nocomma: true,
+                    nonbsp: true,
+                    nonew: true,
+                    undef: true,
+                    shadow: 'outer',
+                    strict: 'global',
+                    globalstrict: true,
+                    latedef: true,
+                    unused: 'strict'
+                }
             },
+            dev: {
+                src: options.allJsFiles,
+                options: {
+                    bitwise: true,
+                    freeze: true,
+                    curly: true,
+                    eqeqeq: true,
+                    futurehostile: true,
+                    forin: true,
+                    noarg: true,
+                    nocomma: true,
+                    nonbsp: true,
+                    nonew: true,
+                    undef: false,
+                    shadow: 'outer',
+                    strict: 'global',
+                    globalstrict: true,
+                    latedef: true,
+                    unused: false
+                }
+            }
         },
         uglify: {
             dist: {
@@ -250,7 +273,7 @@ module.exports = function(grunt) {
         'jsonlint:all',
         'json:config',
         'html2js:main',
-        'jshint',
+        'jshint:dev',
         'jscs',
         'uglify:dev',
         'htmlmin:dev',
@@ -264,7 +287,7 @@ module.exports = function(grunt) {
         'jsonlint:all',
         'json:config',
         'html2js:main',
-        'jshint',
+        'jshint:dist',
         'jscs',
         'uglify:dist',
         'htmlmin:dist',
