@@ -4,27 +4,26 @@
 
 describe('detailsController', function () {
 
-    var injected = {},
-        mocked = {};
+    var mocked = {};
 
     beforeEach(module('flatAngle'));
     beforeEach(inject(function ($injector) {
-        injected.$controller = $injector.get('$controller');
+        this.$controller = $injector.get('$controller');
         mocked.postDetails = {
             'abc': 'def'
         };
         mocked.dependencies = {
             'postDetails': mocked.postDetails
         };
-        injected.detailsController = injected.$controller('detailsController', mocked.dependencies);
+        this.detailsController = this.$controller('detailsController', mocked.dependencies);
     }));
 
     it('should be defined', function () {
-        expect(injected.detailsController).toBeDefined();
+        expect(this.detailsController).toBeDefined();
     });
 
     it('should pass `postDetails` to the vm', function () {
-        expect(injected.detailsController.details).toBe(mocked.postDetails);
+        expect(this.detailsController.details).toBe(mocked.postDetails);
     });
 
 });

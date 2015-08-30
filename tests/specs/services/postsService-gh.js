@@ -4,8 +4,7 @@
 
 describe('postsService (github)', function () {
 
-    var injected = {},
-        mocked = {},
+    var mocked = {},
         expected = {},
         resolved = {};
 
@@ -37,17 +36,17 @@ describe('postsService (github)', function () {
         $provide.constant('apiUrl', mocked.apiUrl);
     }));
     beforeEach(inject(function ($injector) {
-        injected.postsService = $injector.get('postsService');
-        injected.$httpBackend = $injector.get('$httpBackend');
-        injected.$timeout = $injector.get('$timeout');
+        this.postsService = $injector.get('postsService');
+        this.$httpBackend = $injector.get('$httpBackend');
+        this.$timeout = $injector.get('$timeout');
     }));
 
     it('should be defined', function () {
-        expect(injected.postsService).toBeDefined();
+        expect(this.postsService).toBeDefined();
     });
 
     it('should expose getPosts method', function () {
-        expect(injected.postsService.getPosts).toBeDefined();
+        expect(this.postsService.getPosts).toBeDefined();
     });
 
     describe('getPosts', function () {
@@ -59,9 +58,9 @@ describe('postsService (github)', function () {
         });
 
         it('should return false with empty response', function () {
-            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.emptyPostsList);
+            this.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.emptyPostsList);
 
-            mocked.promise = injected.postsService.getPosts();
+            mocked.promise = this.postsService.getPosts();
             mocked.promise.then(function (response) {
                 resolved.postsList = response;
             }, function (reason) {
@@ -71,16 +70,16 @@ describe('postsService (github)', function () {
             expect(resolved.postsList).toBeNull();
             expect(resolved.errorReason).toBeNull();
 
-            injected.$httpBackend.flush();
+            this.$httpBackend.flush();
 
             expect(resolved.postsList).toBe(false);
             expect(resolved.errorReason).toBeNull();
         });
 
         it('should return promise resolving to posts list with good response', function () {
-            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
+            this.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
 
-            mocked.promise = injected.postsService.getPosts();
+            mocked.promise = this.postsService.getPosts();
             mocked.promise.then(function (response) {
                 resolved.postsList = response;
             }, function (reason) {
@@ -90,7 +89,7 @@ describe('postsService (github)', function () {
             expect(resolved.postsList).toBeNull();
             expect(resolved.errorReason).toBeNull();
 
-            injected.$httpBackend.flush();
+            this.$httpBackend.flush();
 
             expect(resolved.postsList).toEqual(expected.goodPostsList);
             expect(resolved.errorReason).toBeNull();
@@ -99,14 +98,14 @@ describe('postsService (github)', function () {
     });
 
     it('should expose getPost method', function () {
-        expect(injected.postsService.getPost).toBeDefined();
+        expect(this.postsService.getPost).toBeDefined();
     });
 
     describe('getPost', function () {
 
         beforeEach(function () {
-            injected.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
-            injected.$httpBackend.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
+            this.$httpBackend.when('GET', mocked.apiUrl).respond(mocked.goodPostsList);
+            this.$httpBackend.when('GET', mocked.downloadUrl).respond(mocked.goodPost);
             resolved.post = null;
             resolved.errorReason = null;
             expected.errorReason = 'alias not found';
@@ -114,7 +113,7 @@ describe('postsService (github)', function () {
 
         it('should return rejected promise if called with bad alias', function () {
 
-            mocked.promise = injected.postsService.getPost(mocked.badAlias);
+            mocked.promise = this.postsService.getPost(mocked.badAlias);
             mocked.promise.then(function (response) {
                 resolved.post = response;
             }, function (reason) {
@@ -124,7 +123,7 @@ describe('postsService (github)', function () {
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
 
-            injected.$httpBackend.flush();
+            this.$httpBackend.flush();
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBe(expected.errorReason);
@@ -133,7 +132,7 @@ describe('postsService (github)', function () {
 
         it('should return promise resolving to post if called with good alias', function () {
 
-            mocked.promise = injected.postsService.getPost(mocked.goodAlias);
+            mocked.promise = this.postsService.getPost(mocked.goodAlias);
             mocked.promise.then(function (response) {
                 resolved.post = response;
             }, function (reason) {
@@ -142,7 +141,7 @@ describe('postsService (github)', function () {
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
-            injected.$httpBackend.flush();
+            this.$httpBackend.flush();
 
             expect(resolved.post.content.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();
@@ -151,10 +150,10 @@ describe('postsService (github)', function () {
 
         it('should return promise resolving to post from cache if called with good alias a second time', function () {
 
-            mocked.promise = injected.postsService.getPost(mocked.goodAlias);
+            mocked.promise = this.postsService.getPost(mocked.goodAlias);
 
-            expect(injected.$httpBackend.flush).not.toThrow();
-            expect(injected.$httpBackend.flush).toThrow();
+            expect(this.$httpBackend.flush).not.toThrow();
+            expect(this.$httpBackend.flush).toThrow();
 
             expect(resolved.post).toBeNull();
             expect(resolved.errorReason).toBeNull();
@@ -162,7 +161,7 @@ describe('postsService (github)', function () {
             // this promise should return the data cached
             // from the previous request
             // not make a new one
-            mocked.promise = injected.postsService.getPost(mocked.goodAlias);
+            mocked.promise = this.postsService.getPost(mocked.goodAlias);
             mocked.promise.then(function (response) {
                 resolved.post = response;
             }, function (reason) {
@@ -173,10 +172,10 @@ describe('postsService (github)', function () {
             expect(resolved.errorReason).toBeNull();
 
             // assert that no requests were made
-            expect(injected.$httpBackend.flush).toThrowError('No pending request to flush !');
+            expect(this.$httpBackend.flush).toThrowError('No pending request to flush !');
 
             // flush the deferreds
-            injected.$timeout.flush();
+            this.$timeout.flush();
 
             expect(resolved.post.content.$$unwrapTrustedValue()).toBe(expected.goodPost);
             expect(resolved.errorReason).toBeNull();

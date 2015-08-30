@@ -9,7 +9,7 @@
     "start": "http-server -a 0.0.0.0 -p 8000",
     "pretest": "grunt",
     "test": "grunt test",
-    "quicktest": "grunt test",
+    "test-quick": "grunt test",
     "webdriver-update": "webdriver-manager update",
     "protractor": "protractor config/protractor.conf.js"
   },

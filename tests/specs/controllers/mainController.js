@@ -4,34 +4,33 @@
 
 describe('mainController', function () {
 
-    var injected = {},
-        mocked = {};
+    var mocked = {};
+    mocked.texts = {
+        'title': 'toto'
+    };
 
     beforeEach(module('flatAngle'));
     beforeEach(inject(function ($injector) {
-        injected.$controller = $injector.get('$controller');
-        injected.$rootScope = $injector.get('$rootScope');
-        injected.$scope = injected.$rootScope.$new();
-        mocked.texts = {
-            'title': 'toto'
-        };
+        this.$controller = $injector.get('$controller');
+        this.$rootScope = $injector.get('$rootScope');
+        this.$scope = this.$rootScope.$new();
         mocked.dependencies = {
-            $scope: injected.$scope,
+            $scope: this.$scope,
             texts: mocked.texts
         };
-        injected.mainController = injected.$controller('mainController', mocked.dependencies);
+        this.mainController = this.$controller('mainController', mocked.dependencies);
     }));
 
     it('should be defined', function () {
-        expect(injected.mainController).toBeDefined();
+        expect(this.mainController).toBeDefined();
     });
 
     it('should pass `texts` to the scope', function () {
-        expect(injected.$scope.texts).toBe(mocked.texts);
+        expect(this.$scope.texts).toBe(mocked.texts);
     });
 
     it('should pass `title` to the scope', function () {
-        expect(injected.$scope.texts.title).toBe(mocked.texts.title);
+        expect(this.$scope.texts.title).toBe(mocked.texts.title);
     });
 
 });
