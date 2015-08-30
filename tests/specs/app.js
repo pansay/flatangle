@@ -5,7 +5,6 @@
 describe('flatAngle app', function() {
 
     var actual = {},
-        injected = {},
         expected = {};
 
     actual.module = angular.module('flatAngle');
@@ -24,11 +23,11 @@ describe('flatAngle app', function() {
 
     beforeEach(module('flatAngle'));
     beforeEach(inject(function($injector) {
-        injected.texts = $injector.get('texts');
-        injected.appUrls = $injector.get('appUrls');
-        injected.homeUrl = $injector.get('homeUrl');
-        injected.apiUrl = $injector.get('apiUrl');
-        injected.showdown = $injector.get('showdown');
+        this.texts = $injector.get('texts');
+        this.appUrls = $injector.get('appUrls');
+        this.homeUrl = $injector.get('homeUrl');
+        this.apiUrl = $injector.get('apiUrl');
+        this.showdown = $injector.get('showdown');
     }));
 
     it('should have all of its constants set', function() {
@@ -36,16 +35,16 @@ describe('flatAngle app', function() {
         expect(actual.constants).toEqual(expected.constants);
 
         // this ensures we didn't forget anything in the inject above
-        for (var i = actual.constants.length - 1; i >= 0 ; i--) {
-            expect(injected[actual.constants[i]]).toBeDefined();
+        for (var i = actual.constants.length - 1; i >= 0 ; --i) {
+            expect(this[actual.constants[i]]).toBeDefined();
         }
 
         /* global texts, config, showdown */
-        expect(injected.texts).toBe(texts[config.config.lang]);
-        expect(injected.appUrls).toBe(config.config.appUrls);
-        expect(injected.homeUrl).toBe(config.config.appUrls[config.config.home]);
-        expect(injected.apiUrl).toBe(config.config.apiUrl);
-        expect(injected.showdown).toBe(showdown);
+        expect(this.texts).toBe(texts[config.config.lang]);
+        expect(this.appUrls).toBe(config.config.appUrls);
+        expect(this.homeUrl).toBe(config.config.appUrls[config.config.home]);
+        expect(this.apiUrl).toBe(config.config.apiUrl);
+        expect(this.showdown).toBe(showdown);
 
     });
 

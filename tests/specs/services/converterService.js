@@ -4,8 +4,7 @@
 
 describe('converterService', function () {
 
-    var injected = {},
-        mocked = {},
+    var mocked = {},
         expected = {};
 
     mocked.multiLinesString = 'abc\ndef\nghi\n';
@@ -15,37 +14,37 @@ describe('converterService', function () {
 
     beforeEach(module('flatAngle'));
     beforeEach(inject(function ($injector) {
-        injected.converterService = $injector.get('converterService');
+        this.converterService = $injector.get('converterService');
     }));
 
     it('should be defined', function () {
-        expect(injected.converterService).toBeDefined();
+        expect(this.converterService).toBeDefined();
     });
 
     it('should expose markdownToHtml method', function () {
-        expect(injected.converterService.markdownToHtml).toBeDefined();
+        expect(this.converterService.markdownToHtml).toBeDefined();
     });
 
     it('should expose htmlToPlainText method', function () {
-        expect(injected.converterService.htmlToPlainText).toBeDefined();
+        expect(this.converterService.htmlToPlainText).toBeDefined();
     });
 
     it('should expose firstLine method', function () {
-        expect(injected.converterService.firstLine).toBeDefined();
+        expect(this.converterService.firstLine).toBeDefined();
     });
 
     it('should expose trustAsHtml method', function () {
-        expect(injected.converterService.trustAsHtml).toBeDefined();
+        expect(this.converterService.trustAsHtml).toBeDefined();
     });
 
     describe('htmlToPlainText method', function () {
 
         it('should convert html to plain text', function () {
-            expect(injected.converterService.htmlToPlainText(mocked.html)).toBe(expected.plainText);
+            expect(this.converterService.htmlToPlainText(mocked.html)).toBe(expected.plainText);
         });
 
         it('should return empty string if given empty string', function () {
-            expect(injected.converterService.htmlToPlainText('')).toBe('');
+            expect(this.converterService.htmlToPlainText('')).toBe('');
         });
 
     });
@@ -53,7 +52,7 @@ describe('converterService', function () {
     describe('firstLine method', function () {
 
         it('should return first line of string', function () {
-            expect(injected.converterService.firstLine(mocked.multiLinesString)).toBe(expected.firstLine);
+            expect(this.converterService.firstLine(mocked.multiLinesString)).toBe(expected.firstLine);
         });
 
     });
@@ -61,7 +60,7 @@ describe('converterService', function () {
     describe('trustAsHtml method', function () {
 
         it('should return wrapped html', function () {
-            expect(injected.converterService.trustAsHtml(mocked.html).$$unwrapTrustedValue()).toBe(mocked.html);
+            expect(this.converterService.trustAsHtml(mocked.html).$$unwrapTrustedValue()).toBe(mocked.html);
         });
 
     });
@@ -69,7 +68,7 @@ describe('converterService', function () {
     describe('markdownToHtml method', function () {
 
         it('should convert markdown to html', function () {
-            expect(injected.converterService.markdownToHtml(
+            expect(this.converterService.markdownToHtml(
                 'sample *text* test'
                 )).toBe(
                 '<p>sample <em>text</em> test</p>'
